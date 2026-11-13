@@ -1,13 +1,67 @@
 # LitoBR
 
-**Brazilian geological open data in QGIS: downloaded, clipped and styled in one click.**
-*Dados geológicos abertos do Brasil no QGIS: baixados, recortados e estilizados em um clique.*
+**Dados geológicos abertos do Brasil no QGIS: baixados, recortados e estilizados em um clique.**
+*Brazilian geological open data in QGIS: downloaded, clipped and styled in one click.*
 
 ![license](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)
 ![qgis](https://img.shields.io/badge/QGIS-3.22%2B%20%7C%204.x-green)
 ![ci](https://github.com/lorenzogeodev/LitoBR/actions/workflows/ci.yml/badge.svg)
 
-[English](#english) · [Português](#português)
+[Português](#português) · [English](#english)
+
+---
+
+## Português
+
+O LitoBR é um complemento do QGIS que traz os dados geológicos públicos do Brasil direto para o projeto.
+Ele conversa com os serviços abertos do Serviço Geológico do Brasil (SGB/CPRM) e do IBGE, sem precisar
+caçar link, descompactar pacote ou montar legenda na mão.
+
+> Projeto independente. O LitoBR não tem vínculo com o SGB/CPRM nem com o IBGE, nem é endossado por eles.
+> Os dados pertencem aos provedores e seguem os termos de uso de cada um.
+
+### O que faz
+
+- **Aba Nuvem:** litoestratigrafia em várias escalas (de 1:1.000.000 a 1:50.000, mais os mapas estaduais),
+  estruturas, recursos minerais, afloramentos, poços SIAGAS, aquíferos, geossítios, cavernas e a geologia
+  1:250.000 do BDIA/IBGE.
+- **Aba RIGeo:** pacotes SIG de 26 mapas geológicos estaduais e 16 províncias minerais
+  (Quadrilátero Ferrífero, Carajás, Tapajós, Seridó e outras).
+- **Área:** recorta pela tela, por uma camada de máscara, ou carrega tudo.
+- **Recomendação:** os produtos que cobrem a área do mapa ganham uma ★, e um botão escolhe o mais
+  detalhado.
+- **Estilo:** paleta oficial publicada pelo SGB (5.385 unidades, reconhecidas pelo código ou pela sigla).
+  Unidade sem cor oficial cai numa paleta por litologia e idade.
+- **Rastreabilidade:** escala, ano e a referência ABNT NBR 6023 ficam nos metadados de cada camada.
+- **Bolinhas de status:** verde (2014 em diante), âmbar (legado), azul (atualização contínua), cinza
+  (sem ano).
+
+### Instalar
+
+- **Pelo QGIS (recomendado):** *Complementos → Gerenciar e instalar complementos*, procure **LitoBR**.
+  Enquanto o complemento estiver marcado como experimental, ative *Mostrar também os complementos
+  experimentais* em *Opções*.
+- **Pelo ZIP:** baixe o `litobr.zip` na página de
+  [releases](https://github.com/lorenzogeodev/LitoBR/releases) e use *Instalar a partir do ZIP*.
+
+O complemento fica no menu **Vetor → LitoBR** e na barra de ferramentas.
+
+### Requisitos e limites
+
+- QGIS 3.22 ou mais novo, inclusive o QGIS 4. Sem bibliotecas Python externas.
+- Precisa de internet. Os dados cobrem só o Brasil.
+- Os pacotes do RIGeo sempre são baixados inteiros; o recorte vale para o que entra no projeto.
+- A Paraíba não tem pacote SIG no RIGeo, e a UF da área é estimada pelo retângulo envolvente de cada
+  estado, então pode errar perto de divisa.
+
+### Se algo der errado
+
+Abra *Exibir → Painéis → Mensagens de log*, aba **LitoBR**, e cole o texto numa
+[issue](https://github.com/lorenzogeodev/LitoBR/issues).
+
+### Autor e licença
+
+Lorenzo D. Privitera · GPL-3.0-or-later. Veja [LICENSE](LICENSE).
 
 ---
 
@@ -78,60 +132,6 @@ certificate settings are respected. The tests do not cover the interface or the 
 
 Bug reports and ideas are welcome in the [issue tracker](https://github.com/lorenzogeodev/LitoBR/issues).
 
-### License
+### Author and license
 
-GPL-3.0-or-later. See [LICENSE](LICENSE).
-
----
-
-## Português
-
-O LitoBR é um complemento do QGIS que traz os dados geológicos públicos do Brasil direto para o projeto.
-Ele conversa com os serviços abertos do Serviço Geológico do Brasil (SGB/CPRM) e do IBGE, sem precisar
-caçar link, descompactar pacote ou montar legenda na mão.
-
-> Projeto independente. O LitoBR não tem vínculo com o SGB/CPRM nem com o IBGE, nem é endossado por eles.
-> Os dados pertencem aos provedores e seguem os termos de uso de cada um.
-
-### O que faz
-
-- **Aba Nuvem:** litoestratigrafia em várias escalas (de 1:1.000.000 a 1:50.000, mais os mapas estaduais),
-  estruturas, recursos minerais, afloramentos, poços SIAGAS, aquíferos, geossítios, cavernas e a geologia
-  1:250.000 do BDIA/IBGE.
-- **Aba RIGeo:** pacotes SIG de 26 mapas geológicos estaduais e 16 províncias minerais
-  (Quadrilátero Ferrífero, Carajás, Tapajós, Seridó e outras).
-- **Área:** recorta pela tela, por uma camada de máscara, ou carrega tudo.
-- **Recomendação:** os produtos que cobrem a área do mapa ganham uma ★, e um botão escolhe o mais
-  detalhado.
-- **Estilo:** paleta oficial publicada pelo SGB (5.385 unidades, reconhecidas pelo código ou pela sigla).
-  Unidade sem cor oficial cai numa paleta por litologia e idade.
-- **Rastreabilidade:** escala, ano e a referência ABNT NBR 6023 ficam nos metadados de cada camada.
-- **Bolinhas de status:** verde (2014 em diante), âmbar (legado), azul (atualização contínua), cinza
-  (sem ano).
-
-### Instalar
-
-- **Pelo QGIS (recomendado):** *Complementos → Gerenciar e instalar complementos*, procure **LitoBR**.
-  Enquanto o complemento estiver marcado como experimental, ative *Mostrar também os complementos
-  experimentais* em *Opções*.
-- **Pelo ZIP:** baixe o `litobr.zip` na página de
-  [releases](https://github.com/lorenzogeodev/LitoBR/releases) e use *Instalar a partir do ZIP*.
-
-O complemento fica no menu **Vetor → LitoBR** e na barra de ferramentas.
-
-### Requisitos e limites
-
-- QGIS 3.22 ou mais novo, inclusive o QGIS 4. Sem bibliotecas Python externas.
-- Precisa de internet. Os dados cobrem só o Brasil.
-- Os pacotes do RIGeo sempre são baixados inteiros; o recorte vale para o que entra no projeto.
-- A Paraíba não tem pacote SIG no RIGeo, e a UF da área é estimada pelo retângulo envolvente de cada
-  estado, então pode errar perto de divisa.
-
-### Se algo der errado
-
-Abra *Exibir → Painéis → Mensagens de log*, aba **LitoBR**, e cole o texto numa
-[issue](https://github.com/lorenzogeodev/LitoBR/issues).
-
-### Licença
-
-GPL-3.0-or-later. Veja [LICENSE](LICENSE).
+Lorenzo D. Privitera · GPL-3.0-or-later. See [LICENSE](LICENSE).
