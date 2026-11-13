@@ -39,8 +39,6 @@ caçar link, descompactar pacote ou montar legenda na mão.
 ### Instalar
 
 - **Pelo QGIS (recomendado):** *Complementos → Gerenciar e instalar complementos*, procure **LitoBR**.
-  Enquanto o complemento estiver marcado como experimental, ative *Mostrar também os complementos
-  experimentais* em *Opções*.
 - **Pelo ZIP:** baixe o `litobr.zip` na página de
   [releases](https://github.com/lorenzogeodev/LitoBR/releases) e use *Instalar a partir do ZIP*.
 
@@ -92,7 +90,6 @@ have to hunt for links, unzip packages or build legends by hand.
 ### Install
 
 - **QGIS Plugin Manager (recommended):** *Plugins → Manage and Install Plugins*, search for **LitoBR**.
-  While the plugin is flagged experimental, tick *Show also experimental plugins* in *Settings*.
 - **From ZIP:** download `litobr.zip` from the [releases](https://github.com/lorenzogeodev/LitoBR/releases)
   page, then *Plugins → Manage and Install Plugins → Install from ZIP*.
 

@@ -128,6 +128,10 @@ def salvar(camada, pasta, nome_base, driver, ext):
     return lyr
 
 
+# Rótulo legível de cada chave de `detalhes` (a chave fica sem acento na propriedade da camada).
+ROTULOS = {"escala": "Escala", "ano_de_publicacao": "Ano de publicação", "data_de_acesso": "Data de acesso"}
+
+
 def aplicar_metadado_abnt(camada, titulo, referencia, origem, detalhes=None):
     """Título, resumo e direitos com a referência ABNT.
 
@@ -135,7 +139,7 @@ def aplicar_metadado_abnt(camada, titulo, referencia, origem, detalhes=None):
     no resumo e em propriedades da camada (`litobr_<chave>`).
     """
     detalhes = detalhes or {}
-    linhas = "".join(f"{k.replace('_', ' ').capitalize()}: {v}\n" for k, v in detalhes.items() if v)
+    linhas = "".join(f"{ROTULOS.get(k, k.replace('_', ' ').capitalize())}: {v}\n" for k, v in detalhes.items() if v)
     meta = camada.metadata()
     meta.setTitle(titulo)
     meta.setAbstract(f"Camada carregada por {origem}.\n{linhas}Referência ABNT NBR 6023:\n{referencia}")

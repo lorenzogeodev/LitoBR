@@ -7,9 +7,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
-      - run: pip install pytest ruff
-      - run: ruff check litobr tests build.py --select F,E9,B --ignore B904
+          # Python do QGIS 3.40+ e do QGIS 4. A compatibilidade com o Python 3.9
+          # do QGIS 3.22 é conferida pelo ruff (--target-version py39).
+          python-version: "3.12"
+      - run: pip install pytest "ruff==0.16.9"
+      - run: ruff check litobr tests build.py --select F,E9,B --ignore B904 --target-version py39
       - run: python -m pytest -q tests
       - run: python build.py
       - uses: actions/upload-artifact@v4
