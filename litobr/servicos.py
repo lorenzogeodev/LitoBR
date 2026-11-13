@@ -15,12 +15,13 @@ TAG = "LitoBR"
 
 
 def baixar_nuvem(cat, plano, bbox, arq_temp, tarefa):
-    """Baixa o tema para um GeoJSON temporário. Retorna {'arquivo', 'paleta'}."""
+    """Baixa o tema para um GeoJSON temporário. Retorna {'arquivo', 'paleta', 'escala', 'ano', 'url'}."""
     if plano["tipo"] == "BDIA_WFS":
         raw = rede.get_bytes(arcgis.url_wfs(cat["bases"]["BDIA_WFS"], plano["caminho"], bbox))
         arcgis.validar_geojson(raw)
         Path(arq_temp).write_bytes(raw)
-        return {"arquivo": arq_temp, "paleta": None}
+        return {"arquivo": arq_temp, "paleta": None, "escala": plano.get("escala"), "ano": plano.get("ano"),
+                "url": cat["bases"]["BDIA_WFS"]}
 
     caminho, escala, ano = plano["caminho"], plano.get("escala"), plano.get("ano")
     if plano.get("estadual"):

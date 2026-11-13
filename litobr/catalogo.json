@@ -626,8 +626,9 @@
    "caminho": "BDIA:geol_area",
    "tag": "BDIA_250k",
    "escala": "1:250.000",
-   "ano": null,
-   "ano_rotulo": "edição não informada pelo IBGE"
+   "ano": 2025,
+   "ano_rotulo": null,
+   "nota": "BDiA/IBGE, versão 2025 (publicada em dez. 2025). O IBGE atualiza a base a cada 2 anos: trocar o ano aqui quando sair a próxima versão."
   },
   {
    "rotulo": "GeoSGB Estadual Oficial (Servidor Web SGB / CPRM)",

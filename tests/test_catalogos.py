@@ -126,3 +126,27 @@ def test_litobr_recomendacao():
     assert "PB" not in [r["chave"] for r in geo.recomendar(cat, (-36.0, -7.3, -35.5, -7.0), "PB")]
     assert geo.recomendar(cat, (10.0, 40.0, 11.0, 41.0)) == []
     assert geo.ufs_na_area((-47.9, -15.9, -47.8, -15.7), cat["ufs_bbox"])[:2] == ["DF", "GO"]
+
+
+def test_litobr_bdia_tem_escala_e_ano():
+    cat = geo.carregar()
+    p = geo.plano_bdia(cat)
+    assert p["escala"] == "1:250.000" and p["ano"] == 2025
+    assert geo.status_produto(p["ano"], p["ano_rotulo"]) == "estavel"
+
+
+def test_litobr_servico_bdia_devolve_escala(tmp_path, monkeypatch):
+    """A rota do BDIA tem que devolver escala e ano, senão o metadado sai 'escala não informada'."""
+    import sys
+    from unittest.mock import MagicMock
+
+    for nome in ("qgis", "qgis.core", "qgis.PyQt", "qgis.PyQt.QtCore", "qgis.PyQt.QtNetwork"):
+        monkeypatch.setitem(sys.modules, nome, MagicMock())
+    for nome in [m for m in sys.modules if m.startswith("litobr")]:
+        monkeypatch.delitem(sys.modules, nome)
+    servicos = __import__("litobr.servicos", fromlist=["x"])
+    geojson = b'{"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": null, "properties": {}}]}'
+    monkeypatch.setattr(servicos.rede, "get_bytes", lambda *a, **k: geojson)
+    cat = geo.carregar()
+    res = servicos.baixar_nuvem(cat, geo.plano_bdia(cat), [-44, -21, -43, -20], tmp_path / "x.geojson", MagicMock())
+    assert res["escala"] == "1:250.000" and res["ano"] == 2025 and res["url"].startswith("https://")
