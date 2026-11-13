@@ -117,10 +117,10 @@ def salvar(camada, pasta, nome_base, driver, ext):
     opc = QgsVectorFileWriter.SaveVectorOptions()
     opc.driverName = driver
     opc.fileEncoding = "UTF-8"
-    opc.actionOnExistingFile = QgsVectorFileWriter.CreateOrOverwriteFile
+    opc.actionOnExistingFile = QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteFile
     res = QgsVectorFileWriter.writeAsVectorFormatV3(
         camada, str(caminho), QgsProject.instance().transformContext(), opc)
-    if res[0] != QgsVectorFileWriter.NoError:
+    if res[0] != QgsVectorFileWriter.WriterError.NoError:
         raise ErroDados(f"Falha ao gravar {caminho.name}: {res[1]}")
     lyr = QgsVectorLayer(str(caminho), camada.name(), "ogr")
     if not lyr.isValid():

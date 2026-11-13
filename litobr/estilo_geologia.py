@@ -249,15 +249,15 @@ def estilizar(iface, camada, tema=None, paleta=None, pasta_pacote=None, opacidad
     nome = normalizar(camada.name())
     feito = False
 
-    if geom == QgsWkbTypes.LineGeometry:
+    if geom == QgsWkbTypes.GeometryType.LineGeometry:
         camada.setRenderer(QgsSingleSymbolRenderer(
             QgsLineSymbol.createSimple({"color": "#b71c1c", "width": "0.45", "line_style": "dash"})))
         feito = True
-    elif geom == QgsWkbTypes.PointGeometry:
+    elif geom == QgsWkbTypes.GeometryType.PointGeometry:
         fn = _POR_TEMA.get(tema) or next((f for chaves, f in _POR_NOME if any(k in nome for k in chaves)), _pontos_minerais)
         fn(camada)
         feito = True
-    elif geom == QgsWkbTypes.PolygonGeometry:
+    elif geom == QgsWkbTypes.GeometryType.PolygonGeometry:
         aquifero = tema in ("DOMINIOS_HIDRO", "AQUIFEROS_BR", "AQUIFEROS_SP") or (not tema and ("aquifero" in nome or "hidro" in nome))
         if _estilo_qml_do_pacote(camada, pasta_pacote):
             feito = True  # o estilo que o autor do mapa mandou junto ganha de tudo

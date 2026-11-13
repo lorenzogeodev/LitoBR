@@ -13,7 +13,7 @@ from .log import registrar, registrar_excecao
 
 class TarefaFundo(QgsTask):
     def __init__(self, descricao, trabalho, ao_terminar, tag):
-        super().__init__(descricao, QgsTask.CanCancel)
+        super().__init__(descricao, QgsTask.Flag.CanCancel)
         self._trabalho = trabalho
         self._ao_terminar = ao_terminar
         self._tag = tag

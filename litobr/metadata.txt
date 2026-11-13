@@ -7,7 +7,7 @@ about=O LitoBR baixa dados geológicos públicos do Brasil direto no QGIS: litoe
     Requisitos e restrições: precisa de internet; os dados cobrem só o Brasil; não usa bibliotecas Python externas; a interface está em português do Brasil.
     Projeto independente: sem vínculo com o SGB/CPRM nem com o IBGE, e não endossado por eles. Os dados pertencem aos provedores e seguem os termos de uso de cada um.
     EN: downloads public geological data of Brazil (SGB/CPRM services, RIGeo packages and BDIA/IBGE) straight into QGIS, clips to the map canvas or to a mask, applies the official colour palette and stores scale, year and an ABNT NBR 6023 citation in each layer's metadata. Requires an internet connection; data cover Brazil only; the interface is in Brazilian Portuguese. Independent project, not affiliated with SGB/CPRM or IBGE.
-version=1.0.0
+version=1.0.1
 author=Lorenzo D. Privitera
 email=lorenzodp.dev@gmail.com
 homepage=https://github.com/lorenzogeodev/LitoBR
@@ -19,7 +19,9 @@ tags=geologia, brasil, litologia, sgb, cprm, ibge, bdia, dados abertos, geology,
 experimental=False
 deprecated=False
 hasProcessingProvider=no
-changelog=1.0.0
+changelog=1.0.1
+    - Enums do QGIS escopados para o Qt6 (QGIS 4), como pede o checador da loja
+    1.0.0
     - Primeira versão pública
     - Serviços REST do SGB/CPRM, pacotes do RIGeo (26 estados e 16 províncias minerais) e BDIA/IBGE
     - Recorte pela tela, por uma camada de máscara, ou sem recorte

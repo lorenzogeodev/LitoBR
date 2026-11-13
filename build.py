@@ -19,6 +19,14 @@ BINARIES = {".so", ".dll", ".pyd", ".exe", ".dylib", ".pyc", ".o", ".a"}
 QT5_ENUM = re.compile(
     r"\bQt\.(?!ItemDataRole|ItemFlag|CheckState|Orientation|GlobalColor|PenStyle|AlignmentFlag)[A-Za-z]+\b"
     r"|\.exec_\(|\bPyQt[56]\b")
+QGIS_ENUM = re.compile(
+    r"\bQgsWkbTypes\.(?:Point|Line|Polygon|Unknown|Null)Geometry\b"
+    r"|\bQgis\.(?:Info|Warning|Critical|Success|NoLevel)\b"
+    r"|\bQgsMapLayerProxyModel\.\w+Layer\b"
+    r"|\bQgsTask\.(?:CanCancel|CancelWithoutPrompt|Hidden|Silent|AllFlags)\b"
+    r"|\b(?:QgsBlockingNetworkRequest|QgsVectorFileWriter)\.NoError\b"
+    r"|\bQgsVectorFileWriter\.(?:CreateOrOverwriteFile|CreateOrOverwriteLayer|AppendToLayer\w*)\b"
+    r"|\bQgsPalLayerSettings\.(?:Line|Curved|Horizontal|Free|OverPoint|AroundPoint|OrderedPositionsAroundPoint)\b")
 MAX_BYTES = 20 * 1024 * 1024
 
 
@@ -66,7 +74,7 @@ def check(release):
             compile(text, str(f), "exec")
             for n, line in enumerate(text.splitlines(), 1):
                 code = line.split("#")[0]
-                if QT5_ENUM.search(code):
+                if QT5_ENUM.search(code) or QGIS_ENUM.search(code):
                     errors.append(f"Qt5-only code (breaks on QGIS 4): {rel}:{n}: {line.strip()}")
                 if re.search(r"\b(import|from)\s+(requests|urllib\.request|urllib2)\b", code):
                     errors.append(f"network outside QGIS manager: {rel}:{n}")

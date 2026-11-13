@@ -1,5 +1,8 @@
 # Changelog / Registro de alterações
 
+## 1.0.1
+Enums do QGIS escopados para o Qt6 (QGIS 4), como pede o checador da loja do QGIS. / QGIS enums scoped for Qt6.
+
 ## 1.0.0
 Primeira versão pública. / First public release.
 

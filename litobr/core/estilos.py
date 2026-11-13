@@ -48,7 +48,7 @@ def rotulo(camada, campo=None, expressao=None, cor="#1a1a1a", buffer="#ffffff", 
     tf.setBuffer(buf)
     ls.setFormat(tf)
     if em_linha:
-        ls.placement = QgsPalLayerSettings.Line
+        ls.placement = QgsPalLayerSettings.Placement.Line
     camada.setLabeling(QgsVectorLayerSimpleLabeling(ls))
     camada.setLabelsEnabled(True)
 

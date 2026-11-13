@@ -32,7 +32,7 @@ def get_bytes(url, params=None, timeout_s=90, feedback=None):
         req.setTransferTimeout(int(timeout_s * 1000))
     bnr = QgsBlockingNetworkRequest()
     codigo = bnr.get(req, True, feedback)
-    if codigo != QgsBlockingNetworkRequest.NoError:
+    if codigo != QgsBlockingNetworkRequest.ErrorCode.NoError:
         host = urlparse(url).netloc
         raise ErroRede(f"Falha ao acessar {host}: {bnr.errorMessage()}")
     return bytes(bnr.reply().content())

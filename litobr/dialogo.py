@@ -23,7 +23,7 @@ from .core.log import registrar
 from .core.tarefa import GerenciadorTarefas, TarefaFundo
 
 TAG = "LitoBR"
-VERSAO = "1.0.0"
+VERSAO = "1.0.1"
 ORIGEM = f"LitoBR v{VERSAO}"
 PASTA = "QGIS_LitoBR_Data"
 BORDAS = [("Borda padrão (0,26 mm)", "0.26"), ("Borda fina (0,08 mm)", "0.08"), ("Sem borda", "0.0")]
@@ -44,8 +44,8 @@ def _combo_camadas():
 
 def _dialogo_camadas(pai, camadas, principal):
     """Lista com caixinhas pra escolher o que entra no projeto. Retorna a lista ou None."""
-    nomes_geom = {QgsWkbTypes.PolygonGeometry: "polígonos", QgsWkbTypes.LineGeometry: "linhas",
-                  QgsWkbTypes.PointGeometry: "pontos"}
+    nomes_geom = {QgsWkbTypes.GeometryType.PolygonGeometry: "polígonos", QgsWkbTypes.GeometryType.LineGeometry: "linhas",
+                  QgsWkbTypes.GeometryType.PointGeometry: "pontos"}
     d = QDialog(pai)
     d.setWindowTitle("LitoBR: camadas do pacote")
     d.setMinimumSize(520, 420)
@@ -249,7 +249,7 @@ class LitoBRDialog(QDialog):
         lo.addWidget(self.rb_tudo)
         hm = QHBoxLayout()
         self.cb_mask = QgsMapLayerComboBox()
-        self.cb_mask.setFilters(QgsMapLayerProxyModel.PolygonLayer)
+        self.cb_mask.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
         self.cb_mask.setEnabled(False)
         self.rb_mask.toggled.connect(self.cb_mask.setEnabled)
         hm.addWidget(self.cb_mask)
@@ -258,7 +258,7 @@ class LitoBRDialog(QDialog):
         self.rb_mask.toggled.connect(self.chk_raster.setEnabled)
         hm.addWidget(self.chk_raster)
         self.cb_raster = QgsMapLayerComboBox()
-        self.cb_raster.setFilters(QgsMapLayerProxyModel.RasterLayer)
+        self.cb_raster.setFilters(QgsMapLayerProxyModel.Filter.RasterLayer)
         self.cb_raster.setEnabled(False)
         self.chk_raster.toggled.connect(self.cb_raster.setEnabled)
         self.rb_mask.toggled.connect(lambda on: self.cb_raster.setEnabled(on and self.chk_raster.isChecked()))
@@ -438,7 +438,7 @@ class LitoBRDialog(QDialog):
                     registrar(f"Serviço estadual falhou ({erro}); tentando BDIA 1:250.000.", TAG, "aviso")
                     self.iface.messageBar().pushMessage(
                         "LitoBR", "Serviço estadual do SGB indisponível; carregando BDIA/IBGE 1:250.000.",
-                        level=Qgis.Warning, duration=8)
+                        level=Qgis.MessageLevel.Warning, duration=8)
                     self._disparar_nuvem(ct.plano_bdia(cat, plano["tema"]), op)
                     return
                 self._falhou(erro)
@@ -540,7 +540,7 @@ class LitoBRDialog(QDialog):
             if not lyr.isValid():
                 registrar(f"Ignorei {arq.name}: não abriu como vetor.", TAG, "aviso")
                 continue
-            nota = ct.nota_camada(arq.stem, lyr.featureCount(), lyr.geometryType() == QgsWkbTypes.PolygonGeometry)
+            nota = ct.nota_camada(arq.stem, lyr.featureCount(), lyr.geometryType() == QgsWkbTypes.GeometryType.PolygonGeometry)
             if nota is not None:
                 abertas.append((nota, lyr))
         if not abertas:
@@ -588,7 +588,7 @@ class LitoBRDialog(QDialog):
                 QgsProject.instance().addMapLayer(rl)
         except Exception as e:  # noqa: BLE001 - erro do GDAL/processing
             registrar(f"Recorte do raster falhou: {e}", TAG, "aviso")
-            self.iface.messageBar().pushMessage("LitoBR", "O recorte do raster falhou (veja o log).", level=Qgis.Warning)
+            self.iface.messageBar().pushMessage("LitoBR", "O recorte do raster falhou (veja o log).", level=Qgis.MessageLevel.Warning)
 
     def _concluir(self, camadas):
         self._ocupado(False)
@@ -596,7 +596,7 @@ class LitoBRDialog(QDialog):
         self.iface.zoomToActiveLayer()
         registrar(f"{len(camadas)} camada(s) carregada(s).", TAG, "ok")
         self.iface.messageBar().pushMessage("LitoBR", f"{len(camadas)} camada(s) carregada(s) e estilizada(s).",
-                                            level=Qgis.Success, duration=5)
+                                            level=Qgis.MessageLevel.Success, duration=5)
 
     def _falhou(self, erro):
         self._ocupado(False)
@@ -606,4 +606,4 @@ class LitoBRDialog(QDialog):
             if ui.vivo(self) and self.isVisible():
                 ui.avisar(self, "LitoBR", msg)
             else:
-                self.iface.messageBar().pushMessage("LitoBR", msg, level=Qgis.Warning, duration=10)
+                self.iface.messageBar().pushMessage("LitoBR", msg, level=Qgis.MessageLevel.Warning, duration=10)
