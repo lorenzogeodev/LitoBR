@@ -1,0 +1,846 @@
+{
+ "versao": "2026-11-11",
+ "bases": {
+  "SGB": "https://geoportal.sgb.gov.br/server/rest/services",
+  "BDIA_WFS": "https://geoservicos.ibge.gov.br/geoserver/BDIA/ows",
+  "RIGEO_API": "https://rigeo.sgb.gov.br/server/api/core"
+ },
+ "ufs_bbox": {
+  "AC": [
+   -73.99,
+   -11.14,
+   -66.62,
+   -7.11
+  ],
+  "AL": [
+   -38.24,
+   -10.5,
+   -35.15,
+   -8.81
+  ],
+  "AP": [
+   -54.88,
+   -1.24,
+   -49.88,
+   4.44
+  ],
+  "AM": [
+   -73.8,
+   -9.82,
+   -56.1,
+   2.25
+  ],
+  "BA": [
+   -46.62,
+   -18.35,
+   -37.34,
+   -8.53
+  ],
+  "CE": [
+   -41.42,
+   -7.86,
+   -37.25,
+   -2.78
+  ],
+  "DF": [
+   -48.29,
+   -16.05,
+   -47.31,
+   -15.5
+  ],
+  "ES": [
+   -41.88,
+   -21.3,
+   -39.67,
+   -17.89
+  ],
+  "GO": [
+   -53.25,
+   -19.5,
+   -45.91,
+   -12.4
+  ],
+  "MA": [
+   -48.76,
+   -10.26,
+   -41.79,
+   -1.05
+  ],
+  "MT": [
+   -61.63,
+   -18.04,
+   -50.22,
+   -7.35
+  ],
+  "MS": [
+   -58.17,
+   -24.07,
+   -50.92,
+   -17.17
+  ],
+  "MG": [
+   -51.08,
+   -22.92,
+   -39.86,
+   -14.23
+  ],
+  "PA": [
+   -58.9,
+   -9.84,
+   -46.06,
+   2.59
+  ],
+  "PB": [
+   -38.77,
+   -8.3,
+   -34.79,
+   -6.03
+  ],
+  "PR": [
+   -54.62,
+   -26.72,
+   -48.02,
+   -22.52
+  ],
+  "PE": [
+   -41.36,
+   -9.48,
+   -34.81,
+   -7.15
+  ],
+  "PI": [
+   -45.99,
+   -10.93,
+   -40.37,
+   -2.75
+  ],
+  "RJ": [
+   -44.89,
+   -23.37,
+   -40.96,
+   -20.76
+  ],
+  "RN": [
+   -38.58,
+   -6.98,
+   -34.97,
+   -4.83
+  ],
+  "RS": [
+   -57.65,
+   -33.75,
+   -49.69,
+   -27.08
+  ],
+  "RO": [
+   -66.62,
+   -13.69,
+   -59.77,
+   -7.97
+  ],
+  "RR": [
+   -64.83,
+   -1.58,
+   -58.89,
+   5.27
+  ],
+  "SC": [
+   -53.84,
+   -29.35,
+   -48.36,
+   -25.96
+  ],
+  "SP": [
+   -53.11,
+   -25.31,
+   -44.16,
+   -19.78
+  ],
+  "SE": [
+   -38.25,
+   -11.57,
+   -36.39,
+   -9.51
+  ],
+  "TO": [
+   -50.74,
+   -13.47,
+   -45.69,
+   -5.17
+  ]
+ },
+ "estados": {
+  "AC": {
+   "nome": "Acre",
+   "titulo": "Mapa geológico do estado do Acre",
+   "url": "https://rigeo.sgb.gov.br/items/5500df33-5863-4a22-932a-cc766fbd6845",
+   "arquivo": "sig_mapa_geologico_acre.zip",
+   "escala": "1:750.000",
+   "ano": 2026
+  },
+  "AL": {
+   "nome": "Alagoas",
+   "titulo": "Geologia e recursos minerais do estado de Alagoas",
+   "url": "https://rigeo.sgb.gov.br/items/6c303208-82c1-4c2d-b6f0-0620e1c4613c",
+   "arquivo": "sig_alagoas.zip",
+   "escala": "1:250.000",
+   "ano": 2017
+  },
+  "AP": {
+   "nome": "Amapá",
+   "titulo": "Mapa geológico e de recursos minerais do Estado do Amapá",
+   "url": "https://rigeo.sgb.gov.br/items/1bede85f-0e4e-4439-ae14-b5a82d5a8253",
+   "arquivo": "sig_amapa.zip",
+   "escala": "1:500.000",
+   "ano": 2024
+  },
+  "AM": {
+   "nome": "Amazonas",
+   "titulo": "Geologia e recursos minerais do estado do Amazonas",
+   "url": "https://rigeo.sgb.gov.br/items/d70ec32a-2486-414a-b685-1eceb640fb33",
+   "arquivo": "sig_amazonas.zip",
+   "escala": "1:1.000.000",
+   "ano": 2006
+  },
+  "BA": {
+   "nome": "Bahia",
+   "titulo": "Mapa geológico do estado da Bahia",
+   "url": "https://rigeo.sgb.gov.br/items/ff6c853a-03dd-4e42-b99b-09c515eb4256",
+   "arquivo": "sig_bahia.zip",
+   "escala": "1:1.000.000",
+   "ano": 2003
+  },
+  "CE": {
+   "nome": "Ceará",
+   "titulo": "Projeto mapa geológico e de recursos minerais do estado do Ceará",
+   "url": "https://rigeo.sgb.gov.br/items/1a855b87-9dd2-4d1d-a382-5f902f40459d",
+   "arquivo": "sig_mapa_geologico_ceara_final.zip",
+   "escala": "1:500.000",
+   "ano": 2021
+  },
+  "DF": {
+   "nome": "Distrito Federal",
+   "titulo": "Geologia do estado de Goiás e Distrito Federal",
+   "url": "https://rigeo.sgb.gov.br/items/acb44a9e-a50b-4fbb-8262-758de3d1a1a5",
+   "arquivo": "sig_goias.zip",
+   "escala": "1:500.000",
+   "ano": 2008
+  },
+  "ES": {
+   "nome": "Espírito Santo",
+   "titulo": "Mapa geológico do estado do Espírito Santo",
+   "url": "https://rigeo.sgb.gov.br/items/a1abaa19-904f-4a1b-aa02-5734cc73c269",
+   "arquivo": "sig_mapa_geologico_do_espirito_santo.zip",
+   "escala": null,
+   "ano": 2018
+  },
+  "GO": {
+   "nome": "Goiás",
+   "titulo": "Geologia do estado de Goiás e Distrito Federal",
+   "url": "https://rigeo.sgb.gov.br/items/acb44a9e-a50b-4fbb-8262-758de3d1a1a5",
+   "arquivo": "sig_goias.zip",
+   "escala": "1:500.000",
+   "ano": 2008
+  },
+  "MA": {
+   "nome": "Maranhão",
+   "titulo": "Geologia e recursos minerais do estado do Maranhão",
+   "url": "https://rigeo.sgb.gov.br/items/3830248e-a8b8-450b-a395-38cfff017f6a",
+   "arquivo": "sig_maranhao.zip",
+   "escala": "1:750.000",
+   "ano": 2012
+  },
+  "MT": {
+   "nome": "Mato Grosso",
+   "titulo": "Geologia e recursos minerais do estado de Mato Grosso",
+   "url": "https://rigeo.sgb.gov.br/items/e2c721e2-15f5-44ab-9909-17c5e1ad7942",
+   "arquivo": "sig_mato_grosso.zip",
+   "escala": "1:1.000.000",
+   "ano": 2004
+  },
+  "MS": {
+   "nome": "Mato Grosso do Sul",
+   "titulo": "Geologia e recursos minerais do estado de Mato Grosso do Sul",
+   "url": "https://rigeo.sgb.gov.br/items/1d3e261a-341e-431c-822a-cc565d31f5ab",
+   "arquivo": "sig_mato_grosso_do_sul.zip",
+   "escala": "1:1.000.000",
+   "ano": 2006
+  },
+  "MG": {
+   "nome": "Minas Gerais",
+   "titulo": "Mapa geológico do estado de Minas Gerais",
+   "url": "https://rigeo.sgb.gov.br/items/f530e8bb-3f28-4d09-af01-72996e01fb98",
+   "arquivo": "sig_minas_gerais.zip",
+   "escala": "1:1.000.000",
+   "ano": 2020
+  },
+  "PA": {
+   "nome": "Pará",
+   "titulo": "Geologia e recursos minerais do estado do Pará",
+   "url": "https://rigeo.sgb.gov.br/items/b11141b8-78e3-40d3-9f26-dad01df8ad9f",
+   "arquivo": "sig_para.zip",
+   "escala": "1:1.000.000",
+   "ano": 2008
+  },
+  "PB": {
+   "nome": "Paraíba",
+   "titulo": "Geologia e recursos minerais do estado da Paraíba",
+   "url": "https://rigeo.sgb.gov.br/items/4c9d5544-d264-4f46-9345-8e0981f538d0",
+   "arquivo": null,
+   "escala": "1:500.000",
+   "ano": 2002
+  },
+  "PR": {
+   "nome": "Paraná",
+   "titulo": "Mapa geológico e de recursos minerais do estado do Paraná",
+   "url": "https://rigeo.sgb.gov.br/items/9b917e28-100b-4cd3-b064-5811515913d3",
+   "arquivo": "sig_geologia_estado_do_parana_vf.zip",
+   "escala": "1:600.000",
+   "ano": 2021
+  },
+  "PE": {
+   "nome": "Pernambuco",
+   "titulo": "Mapa geológico do estado de Pernambuco",
+   "url": "https://rigeo.sgb.gov.br/items/aa9ddda1-6a5e-4dba-b32b-09c4e955f859",
+   "arquivo": "sig_geologia_estado_pe.zip",
+   "escala": "1:500.000",
+   "ano": 2023
+  },
+  "PI": {
+   "nome": "Piauí",
+   "titulo": "Mapa geológico do estado do Piauí",
+   "url": "https://rigeo.sgb.gov.br/items/f7deddbc-fa7c-4d48-a941-a9f9514c8f3e",
+   "arquivo": "sig_piaui.zip",
+   "escala": "1:1.000.000",
+   "ano": 2006
+  },
+  "RJ": {
+   "nome": "Rio de Janeiro",
+   "titulo": "Mapa geológico e de recursos minerais do estado do Rio de Janeiro",
+   "url": "https://rigeo.sgb.gov.br/items/09875082-18cd-4630-9bb1-4265929dd692",
+   "arquivo": "sig_rio_de_janeiro.zip",
+   "escala": "1:400.000",
+   "ano": 2016
+  },
+  "RN": {
+   "nome": "Rio Grande do Norte",
+   "titulo": "Mapa geológico e de recursos minerais do estado do Rio Grande do Norte",
+   "url": "https://rigeo.sgb.gov.br/items/38d8e6f1-2c85-4125-9b4b-f1752a5409f7",
+   "arquivo": "sig_rio_grande_do_norte_2021_vr1.zip",
+   "escala": "1:500.000",
+   "ano": 2021
+  },
+  "RS": {
+   "nome": "Rio Grande do Sul",
+   "titulo": "Geologia e recursos minerais do estado do Rio Grande do Sul",
+   "url": "https://rigeo.sgb.gov.br/items/55617aa5-8a79-4ee1-9d52-cd8c3abb3503",
+   "arquivo": "sig_rio_grande_do_sul.zip",
+   "escala": "1:750.000",
+   "ano": 2008
+  },
+  "RO": {
+   "nome": "Rondônia",
+   "titulo": "Mapa geológico e de recursos minerais do estado de Rondônia",
+   "url": "https://rigeo.sgb.gov.br/items/1bfdb535-7e8f-4841-ad77-897e8e2f680d",
+   "arquivo": "sig_mapa_geologico_recmin_ro.zip",
+   "escala": "1:500.000",
+   "ano": 2023
+  },
+  "RR": {
+   "nome": "Roraima",
+   "titulo": "Mapa geológico do Estado de Roraima",
+   "url": "https://rigeo.sgb.gov.br/items/be8795ae-f0a1-4388-a515-3283c4fc1972",
+   "arquivo": "sig_mapa_geologico_rr.zip",
+   "escala": "1:1.000.000",
+   "ano": 2023
+  },
+  "SC": {
+   "nome": "Santa Catarina",
+   "titulo": "Mapa geológico do estado de Santa Catarina",
+   "url": "https://rigeo.sgb.gov.br/items/f3b76550-9128-44f5-b5fe-7b05e92404a8",
+   "arquivo": "sig_santa_catarina.zip",
+   "escala": "1:500.000",
+   "ano": 2014
+  },
+  "SP": {
+   "nome": "São Paulo",
+   "titulo": "Geologia e recursos minerais do estado de São Paulo",
+   "url": "https://rigeo.sgb.gov.br/items/136b64ff-29ff-48af-9f23-b4a594d1748f",
+   "arquivo": "sig_sao_paulo.zip",
+   "escala": "1:750.000",
+   "ano": 2006
+  },
+  "SE": {
+   "nome": "Sergipe",
+   "titulo": "Mapa geológico e de recursos minerais do Estado de Sergipe",
+   "url": "https://rigeo.sgb.gov.br/items/436d8034-7317-4787-8a6d-6f18bbdd8668",
+   "arquivo": "sig_sergipe.zip",
+   "escala": "1:250.000",
+   "ano": 2014
+  },
+  "TO": {
+   "nome": "Tocantins",
+   "titulo": "Mapa geológico e de recursos minerais do estado do Tocantins",
+   "url": "https://rigeo.sgb.gov.br/items/eb58222e-4160-4caa-baed-a48edb4f5956",
+   "arquivo": "sig_geologico_tocantins.zip",
+   "escala": "1:500.000",
+   "ano": 2022
+  }
+ },
+ "projetos_regionais": {
+  "VALE_RIBEIRA": {
+   "nome": "Vale do Ribeira (ARIM)",
+   "uf": "SP/PR",
+   "titulo": "Projeto ARIM Vale do Ribeira (SP e PR): mapas geológico e de recursos minerais",
+   "url": "https://rigeo.sgb.gov.br/items/e77a7e89-459a-4162-9719-b69327c93ab2",
+   "arquivo": "sig_vale_do_ribeira_vr.zip",
+   "escala": "1:250.000",
+   "ano": 2017,
+   "bbox": [
+    -49.5,
+    -25.0,
+    -47.0,
+    -24.0
+   ]
+  },
+  "QF_CENTRAL": {
+   "nome": "Quadrilátero Ferrífero, subárea central",
+   "uf": "MG",
+   "titulo": "Mapa geológico e de recursos minerais integrado do Quadrilátero Ferrífero - Subárea Central",
+   "url": "https://rigeo.sgb.gov.br/items/931567d2-3c2c-42ba-b474-5b3c255a3e46",
+   "arquivo": "sig_quadrilatero_ferrifero_central_vr.zip",
+   "escala": "1:75.000",
+   "ano": 2020,
+   "bbox": [
+    -44.48,
+    -20.57,
+    -43.13,
+    -19.65
+   ]
+  },
+  "QF_NOROESTE": {
+   "nome": "Quadrilátero Ferrífero, noroeste (ARIM)",
+   "uf": "MG",
+   "titulo": "Mapa geológico e de recursos minerais integrado: ARIM Quadrilátero Ferrífero, noroeste",
+   "url": "https://rigeo.sgb.gov.br/items/712dc1e9-4e8f-4bcc-9df3-882bccc78e14",
+   "arquivo": "sig_nw_quadrilatero_ferrifero_vr.zip",
+   "escala": "1:75.000",
+   "ano": 2019,
+   "bbox": [
+    -45.0,
+    -20.0,
+    -44.5,
+    -19.5
+   ]
+  },
+  "CARAJAS": {
+   "nome": "Carajás (ARIM, versão preliminar)",
+   "uf": "PA",
+   "titulo": "Mapa geológico-geofísico ARIM Carajás: versão preliminar",
+   "url": "https://rigeo.sgb.gov.br/items/6a54b366-54ce-4e95-b5b0-233c12e49179",
+   "arquivo": "sig_arim_carajas_versao_preliminar_vr.zip",
+   "escala": "1:250.000",
+   "ano": 2016,
+   "bbox": [
+    -52.5,
+    -7.0,
+    -49.5,
+    -5.5
+   ]
+  },
+  "CARAJAS_AQUIRI": {
+   "nome": "Carajás, setor Aquiri (ARIM)",
+   "uf": "PA",
+   "titulo": "Mapa geológico e de recursos minerais do setor Aquiri - ARIM Carajás",
+   "url": "https://rigeo.sgb.gov.br/items/03b25bba-a134-4522-9ce4-b5798df3efd6",
+   "arquivo": "sig_setor_aquiri_vr.zip",
+   "escala": "1:50.000",
+   "ano": 2020,
+   "bbox": [
+    -52.5,
+    -7.0,
+    -49.5,
+    -5.5
+   ]
+  },
+  "TAPAJOS": {
+   "nome": "Província Mineral do Tapajós",
+   "uf": "PA",
+   "titulo": "Mapa geológico e de recursos minerais Província Mineral do Tapajós",
+   "url": "https://rigeo.sgb.gov.br/items/51c49957-e348-4f2c-984a-5fe4f687629c",
+   "arquivo": "sig_provincia_tapajos_vr.zip",
+   "escala": "1:500.000",
+   "ano": 2020,
+   "bbox": [
+    -58.5,
+    -8.5,
+    -54.5,
+    -4.5
+   ]
+  },
+  "SERIDO": {
+   "nome": "Província Mineral do Seridó (Borborema)",
+   "uf": "RN/PB",
+   "titulo": "Província Mineral do Seridó: mapa geológico integrado e mapa de recursos minerais integrado",
+   "url": "https://rigeo.sgb.gov.br/items/4f9ae478-9fff-45f4-aa0b-97b6503967d4",
+   "arquivo": "sig_geologico_integrado_serido_vr.zip",
+   "escala": "1:350.000",
+   "ano": 2021,
+   "bbox": [
+    -38.0,
+    -7.26,
+    -36.0,
+    -5.5
+   ]
+  },
+  "JURUENA": {
+   "nome": "Juruena–Teles Pires (ARIM)",
+   "uf": "MT",
+   "titulo": "Mapa geológico integrado, ARIM Juruena-Teles Pires",
+   "url": "https://rigeo.sgb.gov.br/items/ad79442b-85a2-442a-aaec-098b4bad983e",
+   "arquivo": "sig_juruena_teles_pires_integrado_vr.zip",
+   "escala": "1:300.000",
+   "ano": 2019,
+   "bbox": [
+    -58.5,
+    -11.0,
+    -54.0,
+    -9.0
+   ]
+  },
+  "ARIPUANA": {
+   "nome": "Aripuanã (ARIM)",
+   "uf": "MT",
+   "titulo": "ARIM: evolução crustal e metalogenia da região de Aripuanã",
+   "url": "https://rigeo.sgb.gov.br/items/3e856620-50af-4635-ba46-74a7e8d17600",
+   "arquivo": "sig_arim_aripuana_vr.zip",
+   "escala": null,
+   "ano": 2020,
+   "bbox": [
+    -61.5,
+    -11.5,
+    -55.5,
+    -10.0
+   ]
+  },
+  "JUMA": {
+   "nome": "Sudeste do Amazonas, distrito aurífero Juma (ARIM)",
+   "uf": "AM",
+   "titulo": "ARIM: evolução crustal e metalogenia do sudeste do Amazonas",
+   "url": "https://rigeo.sgb.gov.br/items/5fe98165-aa18-4d7d-9e5e-f5a36fa6b60c",
+   "arquivo": "sig_arim_sudeste_do_amazonas_vr.zip",
+   "escala": "1:500.000",
+   "ano": 2021,
+   "bbox": null
+  },
+  "FAIXA_BRASILIA": {
+   "nome": "Centro-norte da Faixa Brasília (ARIM)",
+   "uf": "TO/GO",
+   "titulo": "Mapa geológico e de recursos minerais: ARIM centro-norte da Faixa Brasília",
+   "url": "https://rigeo.sgb.gov.br/items/d7328919-2ed9-4159-b6ce-065ce5ffe187",
+   "arquivo": "sig_geologico_integ_centro_norte_faixa_brasilia_vr.zip",
+   "escala": "1:250.000",
+   "ano": 2019,
+   "bbox": [
+    -49.0,
+    -13.5,
+    -48.0,
+    -12.0
+   ]
+  },
+  "PARACATU": {
+   "nome": "Paracatu–Unaí, Zn-Pb-Cu (ARIM)",
+   "uf": "MG",
+   "titulo": "ARIM: distrito mineral de Paracatu-Unaí (Zn-Pb-Cu)",
+   "url": "https://rigeo.sgb.gov.br/items/f7139338-dce5-41fe-abd3-097c54e40956",
+   "arquivo": "sig_distrito_mineiro_paracatu_unai_vr1.zip",
+   "escala": null,
+   "ano": 2018,
+   "bbox": [
+    -47.02,
+    -17.66,
+    -46.6,
+    -16.47
+   ]
+  },
+  "VAZANTE": {
+   "nome": "Distrito zincífero de Vazante",
+   "uf": "MG",
+   "titulo": "Metalogenia das províncias minerais do Brasil: distrito zincífero de Vazante",
+   "url": "https://rigeo.sgb.gov.br/items/31e22409-5493-4f26-ac02-694962cdd8b5",
+   "arquivo": "sig_distrito_zincifero_vazante_vr.zip",
+   "escala": null,
+   "ano": 2015,
+   "bbox": [
+    -47.02,
+    -18.26,
+    -46.61,
+    -16.47
+   ]
+  },
+  "JACOBINA": {
+   "nome": "Serra de Jacobina (ARIM)",
+   "uf": "BA",
+   "titulo": "ARIM: integração geológica e potencial metalogenético da Serra de Jacobina",
+   "url": "https://rigeo.sgb.gov.br/items/0e8dd1f8-4653-43a8-ae6a-258fc0c5aea1",
+   "arquivo": "sig_serra_de_jacobina_rf.zip",
+   "escala": null,
+   "ano": 2021,
+   "bbox": [
+    -41.0,
+    -14.5,
+    -40.0,
+    -10.0
+   ]
+  },
+  "PELOTAS": {
+   "nome": "Batólito Pelotas e Terrenos Tijucas (ARIM)",
+   "uf": "RS",
+   "titulo": "Área de relevante interesse mineral Batólito Pelotas - Terrenos Tijucas",
+   "url": "https://rigeo.sgb.gov.br/items/d23a13a3-10b6-426a-a435-4c142f3de227",
+   "arquivo": "sig_batolito_pelotas_ultimo.zip",
+   "escala": "1:500.000",
+   "ano": 2019,
+   "bbox": [
+    -54.0,
+    -33.0,
+    -51.5,
+    -30.0
+   ]
+  },
+  "LUIS_ALVES": {
+   "nome": "Cráton Luís Alves (ARIM)",
+   "uf": "SC/PR",
+   "titulo": "ARIM: integração geológica-geofísica e recursos minerais do Cráton Luís Alves",
+   "url": "https://rigeo.sgb.gov.br/items/c107750c-cb8a-4d4e-b2d0-3161ebe24e7f",
+   "arquivo": "sig_arim_craton_luis_alves_vr.zip",
+   "escala": "1:250.000",
+   "ano": 2018,
+   "bbox": null
+  }
+ },
+ "escalas": [
+  {
+   "rotulo": "BDIA / IBGE 1:250.000 — Base Vetorial Contínua Nacional",
+   "tipo": "BDIA_WFS",
+   "caminho": "BDIA:geol_area",
+   "tag": "BDIA_250k",
+   "escala": "1:250.000",
+   "ano": null,
+   "ano_rotulo": "edição não informada pelo IBGE"
+  },
+  {
+   "rotulo": "GeoSGB Estadual Oficial (Servidor Web SGB / CPRM)",
+   "tipo": "ESTADUAL",
+   "caminho": "geologia/litoestratigrafia_estados/MapServer",
+   "tag": "Estadual",
+   "escala": "conforme o estado",
+   "ano": null,
+   "ano_rotulo": "conforme o estado"
+  },
+  {
+   "rotulo": "GeoSGB 1:100.000 — Cartas Geológicas de Semidetalhe (SGB)",
+   "tipo": "SGB_REST",
+   "caminho": "geologia/litoestratigrafia_100000/MapServer/0",
+   "tag": "100k",
+   "escala": "1:100.000",
+   "ano": null,
+   "ano_rotulo": "varia por folha"
+  },
+  {
+   "rotulo": "GeoSGB 1:250.000 — Cartas Regionais (SGB/CPRM)",
+   "tipo": "SGB_REST",
+   "caminho": "geologia/litoestratigrafia_250000/MapServer/0",
+   "tag": "250k",
+   "escala": "1:250.000",
+   "ano": null,
+   "ano_rotulo": "varia por folha"
+  },
+  {
+   "rotulo": "GeoSGB 1:50.000 — Cartas Geológicas de Detalhe (SGB)",
+   "tipo": "SGB_REST",
+   "caminho": "geologia/litoestratigrafia_50000/MapServer/0",
+   "tag": "50k",
+   "escala": "1:50.000",
+   "ano": null,
+   "ano_rotulo": "varia por folha"
+  },
+  {
+   "rotulo": "GeoSGB 1:1.000.000 — Carta Geológica ao Milionésimo",
+   "tipo": "SGB_REST",
+   "caminho": "geologia/litoestratigrafia_1000000/MapServer/0",
+   "tag": "1M",
+   "escala": "1:1.000.000",
+   "ano": 2004,
+   "ano_rotulo": null
+  }
+ ],
+ "temas": [
+  {
+   "rotulo": "Unidades Litoestratigráficas / Litologia (Polígonos)",
+   "chave": "LITO"
+  },
+  {
+   "rotulo": "Províncias Estruturais do Brasil (Polígonos — SGB)",
+   "chave": "PROVINCIAS_EST"
+  },
+  {
+   "rotulo": "Províncias e Distritos Auríferos (Polígonos — SGB)",
+   "chave": "DISTRITOS_MIN"
+  },
+  {
+   "rotulo": "Falhas, Fraturas e Lineamentos Estruturais (Linhas — SGB)",
+   "chave": "ESTRUTURAS"
+  },
+  {
+   "rotulo": "Medidas Estruturais de Campo (Pontos — SGB)",
+   "chave": "MEDIDAS_EST"
+  },
+  {
+   "rotulo": "Poços Tubulares — SIAGAS Completo (Pontos — SGB)",
+   "chave": "SIAGAS"
+  },
+  {
+   "rotulo": "Domínios Hidrogeológicos do Brasil (Polígonos — SGB)",
+   "chave": "DOMINIOS_HIDRO"
+  },
+  {
+   "rotulo": "Sistemas Aquíferos do Brasil (Polígonos — SGB)",
+   "chave": "AQUIFEROS_BR"
+  },
+  {
+   "rotulo": "Aquíferos do Estado de São Paulo (Polígonos — SGB)",
+   "chave": "AQUIFEROS_SP"
+  },
+  {
+   "rotulo": "Geossítios e Patrimônio Geológico — GEOSSIT (Pontos)",
+   "chave": "GEOSSIT"
+  },
+  {
+   "rotulo": "Cavernas — Base CANIE/SGB (Pontos)",
+   "chave": "CAVERNAS"
+  },
+  {
+   "rotulo": "Recursos Minerais e Jazidas (Pontos — SGB 1:1M)",
+   "chave": "OCORRENCIAS"
+  },
+  {
+   "rotulo": "Afloramentos e Pontos de Campo (Pontos — SGB 1:100k)",
+   "chave": "AFLORAMENTOS"
+  }
+ ],
+ "endpoints_temas": {
+  "PROVINCIAS_EST": {
+   "tipo": "SGB_REST",
+   "caminho": "Mapa_de_Províncias_Estruturais/MapServer/0",
+   "tag": "Provincias_Estruturais",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "DISTRITOS_MIN": {
+   "tipo": "SGB_REST",
+   "caminho": "Províncias_e_Distritos_Auríferos_do_Brasil/MapServer/1",
+   "tag": "Distritos_Auriferos",
+   "escala": "1:5.000.000",
+   "ano": 2022,
+   "ano_rotulo": null
+  },
+  "ESTRUTURAS": {
+   "tipo": "SGB_REST",
+   "caminho": "geologia/Estruturas_GIS_Brasil_2004/MapServer/0",
+   "tag": "Estruturas_1M",
+   "escala": "1:1.000.000",
+   "ano": 2004,
+   "ano_rotulo": null
+  },
+  "MEDIDAS_EST": {
+   "tipo": "SGB_REST",
+   "caminho": "Hosted/medidas_estruturais_ds/FeatureServer/0",
+   "tag": "Medidas_Estruturais",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "SIAGAS": {
+   "tipo": "SGB_REST",
+   "caminho": "hidrologia/SIAGAS_MODDAD/MapServer/0",
+   "tag": "Pocos_SIAGAS",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": "atualização contínua"
+  },
+  "DOMINIOS_HIDRO": {
+   "tipo": "SGB_REST",
+   "caminho": "hidrologia/Dominios_hidrogeologicos_Brasil/MapServer/0",
+   "tag": "Dominios_Hidrogeologicos",
+   "escala": "1:2.500.000",
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "AQUIFEROS_BR": {
+   "tipo": "SGB_REST",
+   "caminho": "Hosted/Aquíferos_BR/FeatureServer/0",
+   "tag": "Sistemas_Aquiferos_BR",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "AQUIFEROS_SP": {
+   "tipo": "SGB_REST",
+   "caminho": "hidrologia/aquifero_uf_sp/MapServer/14",
+   "tag": "Aquiferos_SP",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "GEOSSIT": {
+   "tipo": "SGB_REST",
+   "caminho": "gestaoterritorial/geossit/MapServer/0",
+   "tag": "Patrimonio_Geossit",
+   "escala": null,
+   "ano": null,
+   "ano_rotulo": "atualização contínua"
+  },
+  "CAVERNAS": {
+   "tipo": "SGB_REST",
+   "caminho": "Cavernas/MapServer/0",
+   "tag": "Cavernas_CANIE",
+   "escala": null,
+   "ano": 2020,
+   "ano_rotulo": null,
+   "nota": "Base CANIE de 31/12/2020"
+  },
+  "OCORRENCIAS": {
+   "tipo": "SGB_REST",
+   "caminho": "geologia/ocorrencias/MapServer/0",
+   "tag": "Minerais_1M",
+   "escala": "1:1.000.000",
+   "ano": null,
+   "ano_rotulo": null
+  },
+  "AFLORAMENTOS": {
+   "tipo": "SGB_REST",
+   "caminho": "geologia/afloramentos/MapServer/0",
+   "tag": "Afloramentos_100k",
+   "escala": "1:100.000",
+   "ano": null,
+   "ano_rotulo": null
+  }
+ },
+ "legenda_status": {
+  "estavel": "Estável: publicado em 2014 ou depois",
+  "legado": "Legado: publicado antes de 2014",
+  "continuo": "Banco de dados com atualização contínua",
+  "desconhecido": "Ano não informado pela fonte"
+ },
+ "ano_corte_estavel": 2014,
+ "estadual_layers": "geologia/litoestratigrafia_estados/MapServer",
+ "fonte_contornos": "SGB, serviço projetos/projetos/MapServer/0 (contorno dos projetos), consultado em 12/11/2026",
+ "paleta_sgb": [
+  "geologia/litoestratigrafia_1000000/MapServer/0",
+  "geologia/litoestratigrafia_250000/MapServer/0",
+  "geologia/litoestratigrafia_100000/MapServer/0",
+  "geologia/litoestratigrafia_50000/MapServer/0"
+ ]
+}

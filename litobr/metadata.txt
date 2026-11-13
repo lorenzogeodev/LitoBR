@@ -1,0 +1,29 @@
+[general]
+name=LitoBR
+qgisMinimumVersion=3.22
+qgisMaximumVersion=4.99
+description=Brazilian geological open data (SGB/CPRM and IBGE) downloaded, clipped and styled in one click. Dados geológicos abertos do Brasil, já recortados e estilizados.
+about=LitoBR downloads public geological data of Brazil straight into QGIS: lithostratigraphy at several scales, structures, mineral resources, outcrops, wells (SIAGAS), aquifers, geosites and caves from the SGB/CPRM ArcGIS REST services, state maps and mineral provinces from the RIGeo repository, and the 1:250,000 geology of BDIA/IBGE. Layers are clipped to the map canvas or to a mask, reprojected, styled with the official colour palette published by the data provider, and tagged with scale, year and an ABNT NBR 6023 citation in the layer metadata.
+    Requirements and restrictions: internet connection; data cover Brazil only; no external Python libraries; the interface is in Brazilian Portuguese.
+    Independent project: not affiliated with or endorsed by SGB/CPRM or IBGE. Data belong to their providers and follow their terms of use.
+    PT-BR: baixa dados geológicos públicos do Brasil (SGB/CPRM, RIGeo e BDIA/IBGE) direto no QGIS, recorta pela tela ou por máscara, aplica a paleta oficial e grava escala, ano e a referência ABNT em cada camada. Projeto independente, sem vínculo com o SGB/CPRM ou o IBGE.
+version=1.0.0
+author=Lorenzo Dantas
+email=lorenzodp.dev@gmail.com
+homepage=https://github.com/lorenzogeodev/LitoBR
+repository=https://github.com/lorenzogeodev/LitoBR
+tracker=https://github.com/lorenzogeodev/LitoBR/issues
+category=Vector
+icon=icon.png
+tags=geology, brazil, sgb, cprm, ibge, bdia, lithology, open data, geologia, brasil, litologia
+experimental=True
+deprecated=False
+hasProcessingProvider=no
+changelog=1.0.0
+    - First public release
+    - SGB/CPRM REST services, RIGeo packages (26 states, 16 mineral provinces) and BDIA/IBGE
+    - Clip to canvas, to a mask layer, or no clip
+    - Official SGB colour palette (5,385 units) with fallback palette by lithology and age
+    - Recommendation of the most detailed product for the current map area
+    - Scale, year and ABNT NBR 6023 citation stored in layer metadata
+    - QGIS 3.22+ and QGIS 4 (Qt6) code paths
