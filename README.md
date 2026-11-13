@@ -7,6 +7,8 @@
 ![qgis](https://img.shields.io/badge/QGIS-3.22%2B%20%7C%204.x-green)
 ![ci](https://github.com/lorenzogeodev/LitoBR/actions/workflows/ci.yml/badge.svg)
 
+![LitoBR em ação: mapa estadual do Ceará baixado do RIGeo e estilizado com a paleta oficial](assets/litobr-demo.gif)
+
 [Português](#português) · [English](#english)
 
 ---
