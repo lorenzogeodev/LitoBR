@@ -23,7 +23,16 @@ QGroupBox::title {
 QTabWidget::pane { border: 1px solid palette(mid); border-radius: 10px; top: -1px; }
 QTabBar::tab { padding: 6px 12px; border-top-left-radius: 8px; border-top-right-radius: 8px; }
 QComboBox, QLineEdit, QSpinBox, QDoubleSpinBox { border-radius: 6px; padding: 3px 6px; }
-QPushButton { border-radius: 8px; padding: 6px 12px; }
+QPushButton {
+    border: 1px solid palette(mid);
+    border-radius: 8px;
+    padding: 6px 12px;
+    background: palette(button);
+}
+QPushButton:hover { background: palette(light); }
+QPushButton:disabled { color: palette(mid); }
+QPushButton#avancado { border: none; background: transparent; text-align: left; padding: 4px 6px; font-weight: bold; }
+QPushButton#avancado:hover { background: palette(midlight); }
 QPushButton#primario {
     color: white;
     font-weight: bold;
@@ -38,7 +47,12 @@ QPushButton#primario:hover {
         stop:0 #7cebd6, stop:0.48 #2cc9ad, stop:0.52 #18a88e, stop:1 #108a75);
 }
 QPushButton#primario:disabled { background: #9e9e9e; border-color: #757575; }
-QLabel#dica { color: palette(dark); font-size: 9pt; }
+QLabel#dica { color: palette(window-text); font-size: 9pt; }
+QLabel#area { padding: 2px 4px; }
+QLabel#status { padding: 6px 10px; border-radius: 8px; font-weight: bold; }
+QLabel#status[tipo="ok"] { color: #0b5d4f; background: #d6f5ec; border: 1px solid #5fcbb3; }
+QLabel#status[tipo="andando"] { color: #0c4a7a; background: #dcecfb; border: 1px solid #8fbfe8; }
+QLabel#status[tipo="erro"] { color: #7a1f12; background: #fbe1dc; border: 1px solid #e59a8c; }
 """
 
 
@@ -124,9 +138,10 @@ def icone_status(status, tamanho=14):
 
 def legenda_status(textos):
     """Rótulo em texto rico com as bolinhas e o que cada cor quer dizer."""
-    partes = [f'<span style="color:{CORES_STATUS[s]}; font-size:13pt;">●</span>&nbsp;{textos[s]}'
+    partes = [f'<span style="white-space:nowrap;"><span style="color:{CORES_STATUS[s]}; font-size:13pt;">●</span>&nbsp;'
+              f'{textos[s].replace(" ", "&nbsp;")}</span>'
               for s in ("estavel", "legado", "continuo", "desconhecido") if s in textos]
-    lb = QLabel("&nbsp;&nbsp;&nbsp;".join(partes))
+    lb = QLabel("&nbsp;&nbsp;&nbsp; ".join(partes))
     lb.setObjectName("dica")
     lb.setWordWrap(True)
     return lb

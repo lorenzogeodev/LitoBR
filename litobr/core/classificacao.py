@@ -191,6 +191,43 @@ def cor_geologica(sigla, unidade="", lito="", tempo=""):
     return COR_PADRAO
 
 
+def variar_tom(hex_cor, n):
+    """Variante `n` de uma cor: n=0 devolve a própria; as seguintes alternam mais escura e
+    mais clara, com um desvio pequeno de matiz, pra separar unidades da mesma família."""
+    if n <= 0:
+        return hex_cor
+    import colorsys
+
+    h = hex_cor.lstrip("#")
+    r, g, b = (int(h[i:i + 2], 16) / 255.0 for i in (0, 2, 4))
+    mat, luz, sat = colorsys.rgb_to_hls(r, g, b)
+    passo = (n + 1) // 2
+    sinal = -1 if n % 2 else 1
+    luz = min(0.90, max(0.28, luz + sinal * 0.09 * passo))
+    mat = (mat + sinal * 0.018 * passo) % 1.0
+    r, g, b = colorsys.hls_to_rgb(mat, luz, min(1.0, sat + 0.04 * passo))
+    return "#{:02x}{:02x}{:02x}".format(round(r * 255), round(g * 255), round(b * 255))
+
+
+def desempatar_cores(cores, variaveis):
+    """Recebe [(preenchimento, borda)] na ordem da legenda e a lista de quais podem mudar
+    (as que vieram da paleta do plugin). Cor repetida vira uma variante de tom; cor oficial
+    nunca é alterada. Devolve a lista nova."""
+    usadas = {c[0].lower() for c, v in zip(cores, variaveis) if not v}
+    saida = []
+    for (fill, borda), pode in zip(cores, variaveis):
+        if not pode:
+            saida.append((fill, borda))
+            continue
+        novo, n = fill.lower(), 0
+        while novo in usadas and n < 14:
+            n += 1
+            novo = variar_tom(fill, n).lower()
+        usadas.add(novo)
+        saida.append((novo, borda))
+    return saida
+
+
 def escurecer(hex_cor, delta=60):
     h = hex_cor.lstrip("#")
     r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))

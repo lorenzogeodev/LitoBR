@@ -150,3 +150,12 @@ def test_litobr_servico_bdia_devolve_escala(tmp_path, monkeypatch):
     cat = geo.carregar()
     res = servicos.baixar_nuvem(cat, geo.plano_bdia(cat), [-44, -21, -43, -20], tmp_path / "x.geojson", MagicMock())
     assert res["escala"] == "1:250.000" and res["ano"] == 2025 and res["url"].startswith("https://")
+
+
+def test_litobr_nome_da_camada_do_pacote():
+    assert geo.nome_camada_pacote("bahia_lito", True) == "Litologia"
+    assert geo.nome_camada_pacote("bahia_lito", False) == "Bahia lito"
+    assert geo.nome_camada_pacote("Estruturas_CE", True) == "Estruturas CE"   # principal sem cara de geologia
+    assert geo.nome_camada_pacote("", False) == "Camada"
+    cat = geo.carregar()
+    assert set(cat["legenda_status"]) == {"estavel", "legado", "continuo", "desconhecido"}

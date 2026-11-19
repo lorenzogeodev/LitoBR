@@ -172,3 +172,18 @@ def test_dicionario_cores_sgb():
     assert d["por_id"]["1507"] == ("#fefac2", "#bdb981") and set(d["por_id"]) == {"1507", "3604", "9000", "9001"}
     assert d["por_sigla"] == {"Q2a": ("#fefac2", "#bdb981")}       # NP3gamma saiu por ambiguidade
     assert arcgis.dicionario_cores([]) == {"por_id": {}, "por_sigla": {}}
+
+
+def test_cores_da_paleta_de_reserva_nao_se_repetem():
+    azul = cl.cor_geologica("NP2bd", "", "metacalcário")
+    assert azul == cl.cor_geologica("NP2bm", "", "mármore")          # a heurística dá a mesma cor...
+    saida = cl.desempatar_cores([azul, azul, azul, ("#123456", "#000000")], [True, True, True, False])
+    fills = [c[0] for c in saida]
+    assert len(set(fills)) == 4 and fills[0] == azul[0]              # ...e o desempate separa as três
+    assert saida[3] == ("#123456", "#000000")                        # cor oficial não muda
+    # cor oficial igual a uma de reserva: quem muda é a de reserva
+    saida = cl.desempatar_cores([("#80ccff", "#005580"), ("#80ccff", "#005580")], [False, True])
+    assert saida[0][0] == "#80ccff" and saida[1][0] != "#80ccff"
+    assert cl.variar_tom("#80ccff", 0) == "#80ccff"
+    muitas = cl.desempatar_cores([azul] * 12, [True] * 12)
+    assert len({c[0] for c in muitas}) == 12

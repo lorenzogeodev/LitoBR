@@ -1,4 +1,4 @@
-# LitoBR
+# <img src="litobr/icon.png" width="40" align="center"> LitoBR
 
 **Dados geológicos abertos do Brasil no QGIS: baixados, recortados e estilizados em um clique.**
 *Brazilian geological open data in QGIS: downloaded, clipped and styled in one click.*
@@ -24,10 +24,10 @@ caçar link, descompactar pacote ou montar legenda na mão.
 
 ### O que faz
 
-- **Aba Nuvem:** litoestratigrafia em várias escalas (de 1:1.000.000 a 1:50.000, mais os mapas estaduais),
+- **Aba Temas da área:** litoestratigrafia em várias escalas (de 1:1.000.000 a 1:50.000, mais os mapas estaduais),
   estruturas, recursos minerais, afloramentos, poços SIAGAS, aquíferos, geossítios, cavernas e a geologia
   1:250.000 do BDIA/IBGE.
-- **Aba RIGeo:** pacotes SIG de 26 mapas geológicos estaduais e 16 províncias minerais
+- **Aba Mapas estaduais e províncias:** pacotes SIG de 26 mapas geológicos estaduais e 16 províncias minerais
   (Quadrilátero Ferrífero, Carajás, Tapajós, Seridó e outras).
 - **Área:** recorta pela tela, por uma camada de máscara, ou carrega tudo.
 - **Recomendação:** os produtos que cobrem a área do mapa ganham uma ★, e um botão escolhe o mais
@@ -35,7 +35,7 @@ caçar link, descompactar pacote ou montar legenda na mão.
 - **Estilo:** paleta oficial publicada pelo SGB (5.385 unidades, reconhecidas pelo código ou pela sigla).
   Unidade sem cor oficial cai numa paleta por litologia e idade.
 - **Rastreabilidade:** escala, ano e a referência ABNT NBR 6023 ficam nos metadados de cada camada.
-- **Bolinhas de status:** verde (2014 em diante), âmbar (legado), azul (atualização contínua), cinza
+- **Bolinhas de status:** verde (recente, 2014 em diante), âmbar (antigo), azul (atualização contínua), cinza
   (sem ano).
 
 ### Instalar
@@ -53,6 +53,26 @@ O complemento fica no menu **Vetor → LitoBR** e na barra de ferramentas.
 - Os pacotes do RIGeo sempre são baixados inteiros; o recorte vale para o que entra no projeto.
 - A Paraíba não tem pacote SIG no RIGeo, e a UF da área é estimada pelo retângulo envolvente de cada
   estado, então pode errar perto de divisa.
+
+### Fontes de dados
+
+| Fonte | O quê | Acesso |
+|---|---|---|
+| GeoPortal do SGB/CPRM | Geologia, estruturas, recursos minerais, hidrogeologia | ArcGIS REST |
+| RIGeo do SGB/CPRM | Pacotes dos mapas estaduais e das províncias minerais | API DSpace |
+| BDiA do IBGE | Geologia 1:250.000 | WFS |
+
+Todos os endereços ficam em [`litobr/catalogo.json`](litobr/catalogo.json). Se um serviço mudar de endereço, é só editar esse arquivo.
+
+### Desenvolvimento
+
+```bash
+python3 -m pytest tests     # testes das partes puras (não precisa do QGIS)
+python3 build.py            # checagens do repositório oficial + dist/litobr.zip
+python3 build.py --release  # o mesmo, e falha se sobrar marcador no metadata
+```
+
+O que roda na tarefa de fundo (`servicos.py`) só mexe com rede e disco; camadas, canvas e janelas ficam na thread principal. A rede passa pelo gerenciador do QGIS, então proxy e certificados configurados no QGIS são respeitados. Os testes não cobrem a interface nem as chamadas ao PyQGIS.
 
 ### Se algo der errado
 
@@ -76,10 +96,10 @@ have to hunt for links, unzip packages or build legends by hand.
 
 ### What it does
 
-- **Cloud tab:** lithostratigraphy at several scales (1:1,000,000 down to 1:50,000, plus state maps),
+- **"Temas da área" tab (themes for the map area):** lithostratigraphy at several scales (1:1,000,000 down to 1:50,000, plus state maps),
   structures, mineral resources, outcrops, SIAGAS wells, aquifers, geosites, caves and the BDIA/IBGE
   1:250,000 geology.
-- **RIGeo tab:** GIS packages of 26 state geological maps and 16 mineral provinces
+- **"Mapas estaduais e províncias" tab (state maps and provinces):** GIS packages of 26 state geological maps and 16 mineral provinces
   (Quadrilátero Ferrífero, Carajás, Tapajós, Seridó and others).
 - **Area:** clip to the map canvas, to a mask layer, or load everything.
 - **Recommendation:** products that cover the current map area get a ★, and one button picks the most

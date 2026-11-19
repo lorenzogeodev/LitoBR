@@ -252,6 +252,16 @@ PALAVRAS_GEOL = ("lito", "geol", "unid", "rocha", "formacao")
 PALAVRAS_HIDRO = ("drenag", "hidro", "rio", "massa_d", "curso_d")
 
 
+def nome_camada_pacote(arquivo, principal=False):
+    """Nome legível pra camada de um pacote: a principal de geologia vira 'Litologia';
+    as outras perdem o sublinhado ('bahia_estruturas' -> 'Bahia estruturas')."""
+    n = (arquivo or "").lower()
+    if principal and any(k in n for k in PALAVRAS_GEOL):
+        return "Litologia"
+    limpo = " ".join((arquivo or "").replace("_", " ").replace("-", " ").split())
+    return (limpo[:1].upper() + limpo[1:]) if limpo else "Camada"
+
+
 def nota_camada(nome, n_feicoes, eh_poligono):
     """Nota pra escolher a camada principal (litologia) dentro de um ZIP."""
     if n_feicoes <= 0:

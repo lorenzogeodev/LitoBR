@@ -830,10 +830,10 @@
   }
  },
  "legenda_status": {
-  "estavel": "Estável: publicado em 2014 ou depois",
-  "legado": "Legado: publicado antes de 2014",
-  "continuo": "Banco de dados com atualização contínua",
-  "desconhecido": "Ano não informado pela fonte"
+  "estavel": "Recente (2014 ou depois)",
+  "legado": "Antigo (antes de 2014)",
+  "continuo": "Atualização contínua",
+  "desconhecido": "Ano não informado"
  },
  "ano_corte_estavel": 2014,
  "estadual_layers": "geologia/litoestratigrafia_estados/MapServer",

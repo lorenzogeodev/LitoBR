@@ -9,7 +9,7 @@ from qgis.core import (
 from qgis.gui import QgsFileWidget, QgsMapLayerComboBox
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtWidgets import (
-    QCheckBox, QComboBox, QDialog, QDialogButtonBox, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QListWidget,
+    QButtonGroup, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QListWidget,
     QListWidgetItem,
     QProgressBar, QPushButton, QRadioButton, QSlider, QTabWidget, QVBoxLayout, QWidget,
 )
@@ -23,10 +23,10 @@ from .core.log import registrar
 from .core.tarefa import GerenciadorTarefas, TarefaFundo
 
 TAG = "LitoBR"
-VERSAO = "1.0.1"
+VERSAO = "1.0.2"
 ORIGEM = f"LitoBR v{VERSAO}"
 PASTA = "QGIS_LitoBR_Data"
-BORDAS = [("Borda padrão (0,26 mm)", "0.26"), ("Borda fina (0,08 mm)", "0.08"), ("Sem borda", "0.0")]
+BORDAS = [("Borda 0,26 mm", "0.26"), ("Borda fina 0,08 mm", "0.08"), ("Sem borda", "0.0")]
 AUTORES = {"SGB": ("Serviço Geológico do Brasil (SGB/CPRM)", "SGB/CPRM", "Brasília"),
            "IBGE": ("Instituto Brasileiro de Geografia e Estatística (IBGE)", "IBGE", "Rio de Janeiro")}
 
@@ -109,7 +109,12 @@ class LitoBRDialog(QDialog):
     # ------------------------------------------------------------------ UI
     def _montar(self):
         layout = QVBoxLayout(self)
-        layout.addWidget(ui.cabecalho("LitoBR", "Geologia oficial do SGB/CPRM e do BDIA/IBGE, já recortada e estilizada", "rocha"))
+        layout.addWidget(ui.cabecalho(
+            "LitoBR", "Mapa geológico recortado, estilizado e com citação ABNT em poucos cliques (SGB/CPRM e IBGE)", "rocha"))
+        self.lb_area = QLabel("")
+        self.lb_area.setObjectName("area")
+        self.lb_area.setWordWrap(True)
+        layout.addWidget(self.lb_area)
         self.tabs = QTabWidget()
 
         # Aba 1: nuvem
@@ -123,7 +128,7 @@ class LitoBRDialog(QDialog):
         for t in self.cat["temas"]:
             e = self.cat["endpoints_temas"].get(t["chave"])
             if e is None:  # litologia: escala e ano vêm do combo de escala
-                self.cb_tema.addItem(ui.icone_status("desconhecido"), f"{t['rotulo']}  ·  conforme a escala abaixo")
+                self.cb_tema.addItem(ui.icone_status("desconhecido"), f"{t['rotulo']}  ·  escala e ano na opção abaixo")
                 continue
             st = ct.status_produto(e.get("ano"), e.get("ano_rotulo"), corte)
             self.cb_tema.addItem(ui.icone_status(st),
@@ -141,7 +146,9 @@ class LitoBRDialog(QDialog):
         l1.addStretch()
         t1.setLayout(l1)
         self.cb_tema.currentIndexChanged.connect(self._ajustar_escala)
-        self.tabs.addTab(t1, "Nuvem (SGB e BDIA)")
+        self.cb_escala.currentIndexChanged.connect(self._sincronizar_tema)
+        self._sincronizar_tema()
+        self.tabs.addTab(t1, "Temas da área")
 
         # Aba 2: RIGeo
         t2, l2 = QWidget(), QVBoxLayout()
@@ -164,27 +171,27 @@ class LitoBRDialog(QDialog):
                                dict(d, produto=d["nome"], chave=chave))
         for i in range(self.cb_uf.count()):
             self.cb_uf.setItemData(i, self.cb_uf.itemText(i), ROLE_TEXTO)
-        l2.addWidget(QLabel("Mapas estaduais e províncias minerais (repositório RIGeo do SGB):"))
+        l2.addWidget(QLabel("Mapa estadual ou província mineral (pacotes do RIGeo/SGB):"))
         l2.addWidget(self.cb_uf)
         hr = QHBoxLayout()
         self.lb_recom = QLabel("")
-        self.lb_recom.setObjectName("dica")
         self.lb_recom.setWordWrap(True)
         hr.addWidget(self.lb_recom, 1)
-        self.btn_recom = QPushButton("Selecionar o mais detalhado")
-        self.btn_recom.setEnabled(False)
+        self.btn_recom = QPushButton("Usar o mais detalhado")
+        self.btn_recom.setVisible(False)
         self.btn_recom.clicked.connect(self._usar_recomendacao)
         hr.addWidget(self.btn_recom)
         l2.addLayout(hr)
         l2.addWidget(ui.legenda_status({k: v for k, v in self.cat["legenda_status"].items() if k != "continuo"}))
-        self.chk_link = QCheckBox("Informar outro link do RIGeo")
+        self.chk_link = QCheckBox("Usar outro link do RIGeo (avançado)")
         l2.addWidget(self.chk_link)
         self.txt_url = QLineEdit()
         self.txt_url.setPlaceholderText("https://rigeo.sgb.gov.br/items/...")
-        self.txt_url.setEnabled(False)
+        self.txt_url.setVisible(False)
         l2.addWidget(self.txt_url)
         self.chk_link.toggled.connect(self._alternar_link)
         self.cb_uf.currentIndexChanged.connect(self._atualizar_url)
+        self.cb_uf.currentIndexChanged.connect(lambda _i: self._mostrar_botao_recom())
         self._atualizar_url()
         self.cb_camadas = _combo_camadas()
         hc = QHBoxLayout()
@@ -193,7 +200,7 @@ class LitoBRDialog(QDialog):
         l2.addLayout(hc)
         l2.addStretch()
         t2.setLayout(l2)
-        self.tabs.addTab(t2, "Repositório RIGeo")
+        self.tabs.addTab(t2, "Mapas estaduais e províncias")
 
         # Aba 3: local
         t3, l3 = QWidget(), QVBoxLayout()
@@ -208,7 +215,7 @@ class LitoBRDialog(QDialog):
         l3.addLayout(hc3)
         l3.addStretch()
         t3.setLayout(l3)
-        self.tabs.addTab(t3, "Arquivos locais")
+        self.tabs.addTab(t3, "Meu arquivo")
         layout.addWidget(self.tabs)
 
         # Cartografia
@@ -224,48 +231,73 @@ class LitoBRDialog(QDialog):
         lc.addWidget(self.lb_op)
         self.cb_borda = QComboBox()
         self.cb_borda.addItems([b[0] for b in BORDAS])
+        self.cb_borda.setMinimumWidth(190)
         lc.addWidget(self.cb_borda)
         g_cart.setLayout(lc)
         layout.addWidget(g_cart)
 
-        # Saída
-        g_out = QGroupBox("Área e saída")
+        # Área: o essencial à vista, o resto em "Opções avançadas"
+        g_out = QGroupBox("Área")
         lo = QVBoxLayout()
+        self.rb_canvas = QRadioButton("Recortar pela tela do mapa (recomendado)")
+        self.rb_tudo = QRadioButton("Sem recorte: baixar tudo o que toca a tela ou o pacote inteiro")
+        self.rb_mask = QRadioButton("Recortar por uma camada de polígono (máscara):")
+        self.rb_canvas.setChecked(True)
+        self.grupo_area = QButtonGroup(self)
+        for rb in (self.rb_canvas, self.rb_tudo, self.rb_mask):
+            self.grupo_area.addButton(rb)
+            rb.toggled.connect(lambda _on: self._atualizar_area())
+        lo.addWidget(self.rb_canvas)
+        lo.addWidget(self.rb_tudo)
+        g_out.setLayout(lo)
+        layout.addWidget(g_out)
+
+        self.btn_avancado = QPushButton("▸ Opções avançadas")
+        self.btn_avancado.setObjectName("avancado")
+        self.btn_avancado.setCheckable(True)
+        self.btn_avancado.toggled.connect(self._alternar_avancado)
+        layout.addWidget(self.btn_avancado)
+        self.g_avancado = QGroupBox("Opções avançadas")
+        la = QVBoxLayout()
         h = QHBoxLayout()
+        h.addWidget(QLabel("Salvar como:"))
         self.cb_fmt = QComboBox()
         self.cb_fmt.addItems([f[0] for f in geo.FORMATOS])
         self.cb_fmt.setCurrentIndex(1)
-        h.addWidget(self.cb_fmt)
+        h.addWidget(self.cb_fmt, 1)
         self.chk_reproj = QCheckBox("Reprojetar para o SRC do projeto")
         self.chk_reproj.setChecked(True)
         h.addWidget(self.chk_reproj)
-        lo.addLayout(h)
-        self.rb_canvas = QRadioButton("Só a área da tela, recortada no limite da tela")
-        self.rb_mask = QRadioButton("Recortar por camada máscara (polígono)")
-        self.rb_tudo = QRadioButton("Sem recorte: tudo o que tocar a tela (Nuvem) ou o pacote inteiro (RIGeo e arquivo)")
-        self.rb_canvas.setChecked(True)
-        lo.addWidget(self.rb_canvas)
-        lo.addWidget(self.rb_mask)
-        lo.addWidget(self.rb_tudo)
+        la.addLayout(h)
         hm = QHBoxLayout()
+        hm.addWidget(self.rb_mask)
         self.cb_mask = QgsMapLayerComboBox()
         self.cb_mask.setFilters(QgsMapLayerProxyModel.Filter.PolygonLayer)
         self.cb_mask.setEnabled(False)
         self.rb_mask.toggled.connect(self.cb_mask.setEnabled)
-        hm.addWidget(self.cb_mask)
-        self.chk_raster = QCheckBox("Recortar também o raster:")
+        hm.addWidget(self.cb_mask, 1)
+        la.addLayout(hm)
+        hr2 = QHBoxLayout()
+        self.chk_raster = QCheckBox("Recortar também a imagem (raster):")
         self.chk_raster.setEnabled(False)
         self.rb_mask.toggled.connect(self.chk_raster.setEnabled)
-        hm.addWidget(self.chk_raster)
+        hr2.addWidget(self.chk_raster)
         self.cb_raster = QgsMapLayerComboBox()
         self.cb_raster.setFilters(QgsMapLayerProxyModel.Filter.RasterLayer)
         self.cb_raster.setEnabled(False)
         self.chk_raster.toggled.connect(self.cb_raster.setEnabled)
         self.rb_mask.toggled.connect(lambda on: self.cb_raster.setEnabled(on and self.chk_raster.isChecked()))
-        hm.addWidget(self.cb_raster)
-        lo.addLayout(hm)
-        g_out.setLayout(lo)
-        layout.addWidget(g_out)
+        hr2.addWidget(self.cb_raster, 1)
+        la.addLayout(hr2)
+        self.g_avancado.setLayout(la)
+        self.g_avancado.setVisible(False)
+        layout.addWidget(self.g_avancado)
+
+        self.lb_status = QLabel("")
+        self.lb_status.setObjectName("status")
+        self.lb_status.setWordWrap(True)
+        self.lb_status.setVisible(False)
+        layout.addWidget(self.lb_status)
 
         self.barra = QProgressBar()
         self.barra.setRange(0, 0)
@@ -283,15 +315,15 @@ class LitoBRDialog(QDialog):
         hb.addWidget(self.btn_cancel)
         layout.addLayout(hb)
         self._ajustar_escala()
-        # recomendação acompanha a tela
-        self.iface.mapCanvas().extentsChanged.connect(self._atualizar_recomendacao)
-        self.tabs.currentChanged.connect(lambda _i: self._atualizar_recomendacao())
-        self._atualizar_recomendacao()
+        # a linha de área e a recomendação acompanham a tela
+        self.iface.mapCanvas().extentsChanged.connect(self._tela_mudou)
+        self.tabs.currentChanged.connect(lambda _i: self._tela_mudou())
+        self._tela_mudou()
 
     def desligar(self):
         """Solta o sinal do mapa (chamado quando o plugin é descarregado)."""
         try:
-            self.iface.mapCanvas().extentsChanged.disconnect(self._atualizar_recomendacao)
+            self.iface.mapCanvas().extentsChanged.disconnect(self._tela_mudou)
         except (TypeError, RuntimeError):
             pass
 
@@ -299,6 +331,52 @@ class LitoBRDialog(QDialog):
         canvas = self.iface.mapCanvas()
         ext84, _txt = geo.extensao_wgs84(canvas.extent(), canvas.mapSettings().destinationCrs())
         return (ext84.xMinimum(), ext84.yMinimum(), ext84.xMaximum(), ext84.yMaximum()), ext84.center()
+
+    def _tela_mudou(self):
+        if not ui.vivo(self):
+            return
+        self._atualizar_area()
+        self._atualizar_recomendacao()
+
+    def _atualizar_area(self):
+        """Diz, em cima, qual área vai ser baixada (o leigo precisa saber que é a tela)."""
+        if not ui.vivo(self) or not hasattr(self, "rb_mask"):
+            return
+        if self.rb_mask.isChecked():
+            self.lb_area.setText("<b>Área:</b> a camada de polígono escolhida nas opções avançadas.")
+            return
+        try:
+            bbox, centro = self._bbox_tela()
+        except ErroDados:
+            self.lb_area.setText("<b>Área:</b> aproxime o mapa de uma região do Brasil antes de baixar.")
+            return
+        ufs = ", ".join(ct.ufs_na_area(bbox, self.cat["ufs_bbox"])) \
+            or uf_por_ponto(centro.x(), centro.y(), self.cat["ufs_bbox"])
+        if not ufs:
+            self.lb_area.setText("<b>Área:</b> a tela do mapa está fora do Brasil. Aproxime de uma região do país.")
+            return
+        self.lb_area.setText(f"<b>Área:</b> a tela atual do mapa ({ufs}). Para mudar, dê zoom ou arraste o mapa.")
+
+    def _sincronizar_tema(self):
+        """A litologia mostra a bolinha da escala escolhida (antes ficava cinza, parecendo dado sem ano)."""
+        icone = self.cb_escala.itemIcon(self.cb_escala.currentIndex())
+        for i, tema in enumerate(self.cat["temas"]):
+            if tema["chave"] not in self.cat["endpoints_temas"]:
+                self.cb_tema.setItemIcon(i, icone)
+
+    def _alternar_avancado(self, on):
+        self.g_avancado.setVisible(on)
+        self.btn_avancado.setText(("▾ " if on else "▸ ") + "Opções avançadas")
+        if not on and self.rb_mask.isChecked():
+            self.rb_canvas.setChecked(True)  # máscara escondida não pode ficar valendo
+        self.adjustSize()
+
+    def _mostrar_botao_recom(self):
+        """O botão só aparece quando existe um mapa mais detalhado que o já escolhido."""
+        rec = getattr(self, "_recomendados", None)
+        atual = self.cb_uf.currentData()
+        chave = atual.get("chave") if isinstance(atual, dict) else None
+        self.btn_recom.setVisible(bool(rec) and (self.chk_link.isChecked() or rec[0]["chave"] != chave))
 
     def _atualizar_recomendacao(self):
         """Marca com ★ os produtos do RIGeo que cobrem a tela e sugere o mais detalhado."""
@@ -308,7 +386,8 @@ class LitoBRDialog(QDialog):
             bbox, centro = self._bbox_tela()
         except ErroDados:
             self.lb_recom.setText("Aproxime o mapa do Brasil para ver o que cobre a sua área.")
-            self.btn_recom.setEnabled(False)
+            self._recomendados = []
+            self.btn_recom.setVisible(False)
             return
         uf = uf_por_ponto(centro.x(), centro.y(), self.cat["ufs_bbox"])
         self._recomendados = ct.recomendar(self.cat, bbox, uf)
@@ -321,14 +400,14 @@ class LitoBRDialog(QDialog):
                 self.cb_uf.setItemText(i, marca + base)
         if not self._recomendados:
             self.lb_recom.setText("Nenhum mapa do catálogo cobre a área da tela.")
-            self.btn_recom.setEnabled(False)
+            self.btn_recom.setVisible(False)
             return
         r = self._recomendados[0]["item"]
         ufs = ", ".join(ct.ufs_na_area(bbox, self.cat["ufs_bbox"])) or uf or "fora do Brasil"
         self.lb_recom.setText(
-            f"★ cobre a tela ({ufs}). Mais detalhado: <b>{r.get('nome')}</b> "
+            f"★ = cobre a sua área ({ufs}). Mais detalhado: <b>{r.get('nome')}</b> "
             f"({ct.resumo_produto(r.get('escala'), r.get('ano'))}).")
-        self.btn_recom.setEnabled(True)
+        self._mostrar_botao_recom()
 
     def _usar_recomendacao(self):
         if not getattr(self, "_recomendados", None):
@@ -347,7 +426,8 @@ class LitoBRDialog(QDialog):
         self.lb_escala.setEnabled(lito)
 
     def _alternar_link(self, on):
-        self.txt_url.setEnabled(on)
+        self.txt_url.setVisible(on)
+        self._mostrar_botao_recom()
         if not on:
             self._atualizar_url()
 
@@ -362,6 +442,8 @@ class LitoBRDialog(QDialog):
         self.barra.setVisible(on)
         self.btn_exec.setEnabled(not on)
         self.btn_cancel.setEnabled(on)
+        if on:
+            self._status("Baixando e preparando o mapa…", "andando")
 
     # -------------------------------------------------------------- opções
     def _opcoes(self):
@@ -501,6 +583,7 @@ class LitoBRDialog(QDialog):
             ano = (item or {}).get("ano") or res.get("ano")
             produto = (item or {}).get("produto") or res.get("titulo") or res["nome"]
             titulo_item = (item or {}).get("titulo") or res.get("titulo") or produto
+            local = (item or {}).get("nome") or produto
             detalhes = detalhes_produto(escala, ano) if url else {}
             camadas = []
             for lyr in escolhidas:
@@ -508,12 +591,13 @@ class LitoBRDialog(QDialog):
                     titulo_ref = f"{titulo_item}: {lyr.name()}" + (f", escala {escala}" if escala else "")
                     ref = abnt.referencia_online(AUTORES["SGB"][0], titulo_ref, fonte, "Brasília", "SGB/CPRM",
                                                  ano if isinstance(ano, int) else None)
-                    nome = nome_produto(f"{lyr.name()}, {produto}", escala, ano)
+                    amigavel = ct.nome_camada_pacote(lyr.name(), bool(lyr.customProperty("litobr_principal")))
+                    nome = nome_produto(f"{amigavel}, {local}", escala, ano)
                 else:
                     ref, nome = f"Arquivo local: {fonte}", lyr.name()
                 camadas.append(self._pos_processar(lyr, nome, f"{lyr.name()}_{carimbo}", op, ref, detalhes=detalhes))
             if len(camadas) > 1:
-                rotulo_grupo = nome_produto(produto, escala, ano) if url else res["nome"]
+                rotulo_grupo = nome_produto(local, escala, ano) if url else res["nome"]
                 grp = QgsProject.instance().layerTreeRoot().insertGroup(0, rotulo_grupo)
                 # polígonos por baixo, pontos por cima
                 for lyr in sorted(camadas, key=lambda c: -c.geometryType()):
@@ -547,6 +631,7 @@ class LitoBRDialog(QDialog):
             return []
         abertas.sort(key=lambda x: -x[0])
         principal = abertas[0][1]
+        principal.setCustomProperty("litobr_principal", True)
         if modo == "principal":
             return [principal]
         if modo == "todas":
@@ -597,11 +682,23 @@ class LitoBRDialog(QDialog):
         registrar(f"{len(camadas)} camada(s) carregada(s).", TAG, "ok")
         self.iface.messageBar().pushMessage("LitoBR", f"{len(camadas)} camada(s) carregada(s) e estilizada(s).",
                                             level=Qgis.MessageLevel.Success, duration=5)
+        extra = f" e mais {len(camadas) - 1}" if len(camadas) > 1 else ""
+        self._status(f"✔ Pronto: {camadas[0].name()}{extra}. Já está no mapa, com a citação ABNT nos metadados.", "ok")
+
+    def _status(self, texto, tipo="ok"):
+        if not ui.vivo(self):
+            return
+        self.lb_status.setText(texto)
+        self.lb_status.setProperty("tipo", tipo)
+        self.lb_status.style().unpolish(self.lb_status)
+        self.lb_status.style().polish(self.lb_status)
+        self.lb_status.setVisible(bool(texto))
 
     def _falhou(self, erro):
         self._ocupado(False)
         msg = erro or "A operação não foi concluída."
         registrar(msg, TAG, "aviso")
+        self._status("Não concluído: " + msg, "erro")
         if msg != "Operação cancelada.":
             if ui.vivo(self) and self.isVisible():
                 ui.avisar(self, "LitoBR", msg)

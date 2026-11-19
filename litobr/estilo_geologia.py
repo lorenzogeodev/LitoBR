@@ -51,16 +51,20 @@ def _categorias_poligono(camada, campo_chave, cor_de, opacidade, largura):
         v = feat[campo_chave]
         if eh_nulo(v) or v in vistos:
             continue
-        vistos[v] = cor_de(feat, v)  # (legenda, fill, borda)
+        vistos[v] = cor_de(feat, v)  # (legenda, fill, borda) ou (legenda, fill, borda, RESERVA)
+    ordem = sorted(vistos.items(), key=lambda kv: str(kv[0]))
+    # cor repetida da paleta do plugin ganha um tom próprio; cor oficial fica como veio
+    cores = cl.desempatar_cores([(r[1], r[2]) for _v, r in ordem], [len(r) > 3 for _v, r in ordem])
     cats = [
-        QgsRendererCategory(v, _preencher(fill, borda, largura, opacidade), leg)
-        for v, (leg, fill, borda) in sorted(vistos.items(), key=lambda kv: str(kv[0]))
+        QgsRendererCategory(v, _preencher(fill, borda, largura, opacidade), r[0])
+        for (v, r), (fill, borda) in zip(ordem, cores)
     ]
     # valor '' = "todos os outros valores" no renderizador categorizado
     cats.append(QgsRendererCategory("", _preencher(*cl.COR_PADRAO, largura, opacidade), "Sem classificação"))
     return cats if len(cats) > 1 else []
 
 
+RESERVA = True  # marca a cor que veio da paleta do plugin (pode ganhar variação de tom)
 C_ID = ["id_unidade_estratigrafica", "id_unidade", "cod_unidade", "id_unid_es"]
 
 
@@ -104,7 +108,7 @@ def estilizar_litologia(camada, paleta=None, opacidade=1.0, largura="0.26", dici
                 if achou:
                     return legenda(feat, v), achou[0], achou[1]
                 fill, borda = heuristica(feat)
-                return legenda(feat, v), fill, borda
+                return legenda(feat, v), fill, borda, RESERVA
 
             campo_chave = campo_oficial
             cats = _categorias_poligono(camada, campo_chave, cor_oficial, opacidade, largura)
@@ -121,7 +125,7 @@ def estilizar_litologia(camada, paleta=None, opacidade=1.0, largura="0.26", dici
                     return legenda(feat, v), fill, cl.escurecer(fill)
                 except (TypeError, ValueError):
                     fill, borda = heuristica(feat)
-                    return legenda(feat, v), fill, borda
+                    return legenda(feat, v), fill, borda, RESERVA
 
             campo_chave = chave_rgb
             cats = _categorias_poligono(camada, campo_chave, cor_rgb, opacidade, largura)
@@ -145,7 +149,7 @@ def estilizar_litologia(camada, paleta=None, opacidade=1.0, largura="0.26", dici
                 if achou:
                     return legenda(feat, v), achou[0], achou[1]
                 fill, borda = heuristica(feat)
-                return legenda(feat, v), fill, borda
+                return legenda(feat, v), fill, borda, RESERVA
 
             cats = _categorias_poligono(camada, campo_chave, cor_dic, opacidade, largura)
             if not any(acertos):  # nenhuma unidade do pacote existe no banco do SGB
@@ -159,7 +163,7 @@ def estilizar_litologia(camada, paleta=None, opacidade=1.0, largura="0.26", dici
         if not campo_chave:
             return False
         cats = _categorias_poligono(
-            camada, campo_chave, lambda feat, v: (legenda(feat, v), *heuristica(feat)), opacidade, largura)
+            camada, campo_chave, lambda feat, v: (legenda(feat, v), *heuristica(feat), RESERVA), opacidade, largura)
         origem = "heurística por idade e litotipo"
         if not cats:
             return False

@@ -2,12 +2,12 @@
 name=LitoBR
 qgisMinimumVersion=3.22
 qgisMaximumVersion=4.99
-description=Dados geológicos abertos do Brasil (SGB/CPRM e IBGE), baixados, recortados e estilizados em um clique. | Brazilian geological open data, downloaded, clipped and styled in one click.
+description=Mapa geológico do Brasil recortado, estilizado e com citação ABNT em poucos cliques, do QGIS 3.22 ao 4 (dados abertos do SGB/CPRM e do IBGE). | Brazilian geological maps clipped, styled and cited in a few clicks.
 about=O LitoBR baixa dados geológicos públicos do Brasil direto no QGIS: litoestratigrafia em várias escalas, estruturas, recursos minerais, afloramentos, poços SIAGAS, aquíferos, geossítios e cavernas dos serviços ArcGIS REST do SGB/CPRM, mapas estaduais e províncias minerais do RIGeo e a geologia 1:250.000 do BDIA/IBGE. As camadas são recortadas pela tela ou por uma máscara, reprojetadas, estilizadas com a paleta oficial publicada pelo provedor dos dados e gravam escala, ano e a referência ABNT NBR 6023 nos metadados.
     Requisitos e restrições: precisa de internet; os dados cobrem só o Brasil; não usa bibliotecas Python externas; a interface está em português do Brasil.
     Projeto independente: sem vínculo com o SGB/CPRM nem com o IBGE, e não endossado por eles. Os dados pertencem aos provedores e seguem os termos de uso de cada um.
     EN: downloads public geological data of Brazil (SGB/CPRM services, RIGeo packages and BDIA/IBGE) straight into QGIS, clips to the map canvas or to a mask, applies the official colour palette and stores scale, year and an ABNT NBR 6023 citation in each layer's metadata. Requires an internet connection; data cover Brazil only; the interface is in Brazilian Portuguese. Independent project, not affiliated with SGB/CPRM or IBGE.
-version=1.0.1
+version=1.0.2
 author=Lorenzo D. Privitera
 email=lorenzodp.dev@gmail.com
 homepage=https://github.com/lorenzogeodev/LitoBR
@@ -15,11 +15,17 @@ repository=https://github.com/lorenzogeodev/LitoBR
 tracker=https://github.com/lorenzogeodev/LitoBR/issues
 category=Vector
 icon=icon.png
-tags=geologia, brasil, litologia, sgb, cprm, ibge, bdia, dados abertos, geology, brazil, lithology, open data
+tags=geologia, brasil, litologia, mapa geológico, sgb, cprm, ibge, bdia, rigeo, siagas, poços, aquíferos, hidrogeologia, cavernas, geossítios, recursos minerais, abnt, dados abertos, geology, brazil, lithology, geological map, hydrogeology, wells, caves, mineral resources, open data
 experimental=False
 deprecated=False
 hasProcessingProvider=no
-changelog=1.0.1
+changelog=1.0.2
+    - Interface mais simples: abas com nomes claros, linha dizendo qual área vai ser baixada e opções avançadas recolhidas
+    - Aviso de "Pronto" dentro da janela e botão de recomendação visível só quando há mapa mais detalhado
+    - Unidades diferentes não saem mais com a mesma cor na paleta de reserva (as cores oficiais não mudam)
+    - Camada do pacote com nome legível ("Litologia, Bahia") no lugar do nome do arquivo
+    - Legenda de status mais clara (Recente / Antigo) e textos que apareciam cortados
+    1.0.1
     - Enums do QGIS escopados para o Qt6 (QGIS 4), como pede o checador da loja
     1.0.0
     - Primeira versão pública
